@@ -2,6 +2,8 @@
 
 A crapy and unpolished grammar checker powered by [GPT Assistant](https://openai.com/blog/introducing-gpts) and [Neovim builtin diff tool](https://neovim.io/doc/user/diff.html). Seriously, it's just a proof of concept.
 
+![example screenshot](https://github.com/S1M0N38/dante.nvim/blob/main/image.png?raw=true)
+
 ## 💡 Idea
 
 I want to experiment with the newlly released [GPT Assistant API](https://platform.openai.com/docs/assistants/overview). Vim/Neovim builtin diff tool is a good way to highlight the differences between the original text and the suggested one.
