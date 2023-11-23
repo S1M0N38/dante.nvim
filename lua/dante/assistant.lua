@@ -1,127 +1,85 @@
 local config = require("dante.config")
 local assistant = {}
 
-local commands = {
-	create_thread = function()
-		local cmd = [[
-      curl https://api.openai.com/v1/threads \
-        -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $OPENAI_API_KEY" \
-        -H "OpenAI-Beta: assistants=v1" \
-        -d ''
-    ]]
-		return cmd
-	end,
-	create_message = function(thread_id, req_lines)
-		local content = table.concat(req_lines, "\n")
-		local data = vim.fn.json_encode({ role = "user", content = content })
-		local url = "curl " .. "https://api.openai.com/v1/threads/" .. thread_id .. "/messages"
-		local cmd = url
-			.. [[ \
-        -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $OPENAI_API_KEY" \
-        -H "OpenAI-Beta: assistants=v1" \
-        -d ]]
-			.. vim.fn.shellescape(data)
-		return cmd
-	end,
-	create_run = function(thread_id, assistant_id)
-		local data = vim.fn.json_encode({ assistant_id = assistant_id })
-		local url = "curl " .. "https://api.openai.com/v1/threads/" .. thread_id .. "/runs"
-		local cmd = url
-			.. [[ \
-        -H "Authorization: Bearer $OPENAI_API_KEY" \
-        -H "Content-Type: application/json" \
-        -H "OpenAI-Beta: assistants=v1" \
-        -d ]]
-			.. vim.fn.shellescape(data)
-		return cmd
-	end,
-	retrive_run = function(thread_id, run_id)
-		local url = "curl " .. "https://api.openai.com/v1/threads/" .. thread_id .. "/runs/" .. run_id
-		local cmd = url
-			.. [[ \
-        -H "Authorization: Bearer $OPENAI_API_KEY" \
-        -H "OpenAI-Beta: assistants=v1" ]]
-		return cmd
-	end,
+local function encode(line1, line2)
+	local lines = vim.api.nvim_buf_get_lines(0, line1 - 1, line2, true)
+	local messages = {
+		{
+			role = "system",
+			content = config.options.prompt,
+		},
+		{
+			role = "user",
+			content = table.concat(lines, "\n"),
+		},
+	}
+	local json = vim.fn.json_encode({
+		model = config.options.model,
+		temperature = config.options.temperature,
+		stream = true,
+		messages = messages,
+	})
+	return json
+end
 
-	list_messages = function(thread_id)
-		local query_params = "\\?limit=1"
-		local url = "curl " .. "https://api.openai.com/v1/threads/" .. thread_id .. "/messages"
-		local cmd = url
-			.. query_params
-			.. [[ \
-        -H "Authorization: Bearer $OPENAI_API_KEY" \
-        -H "Content-Type: application/json" \
-        -H "OpenAI-Beta: assistants=v1" ]]
-		return cmd
-	end,
-}
+local function command(req)
+	local args = {
+		"--silent",
+		"--no-buffer",
+		'--header "Authorization: Bearer $OPENAI_API_KEY"',
+		'--header "content-type: application/json"',
+		"--url https://api.openai.com/v1/chat/completions",
+		"--data " .. vim.fn.shellescape(req),
+	}
+	return "curl " .. table.concat(args, " ")
+end
 
-function assistant.query(line1, line2, res_buf)
-	local req_lines = vim.api.nvim_buf_get_lines(0, line1 - 1, line2, true)
+local function decode(res)
+	if #(res or "") < 20 then
+		return ""
+	end
+	res = vim.fn.json_decode(string.sub(res, 7))
+	assert(res ~= nil, "res is nil")
+	return res.choices[1].delta.content or ""
+end
 
-	vim.fn.jobstart(commands.create_thread(), {
+function assistant.query(line1, line2, res_buf, res_win)
+	local stream = ""
+
+	local function on_stdout(_, ress, _)
+		for _, res in pairs(ress) do
+			local text = decode(res)
+			if text ~= "" then
+				local lines = vim.split(text, "\n", { plain = true, trimempty = false })
+				local row = vim.api.nvim_buf_get_lines(res_buf, 0, -1, false)
+				local col = row[#row] or ""
+				vim.api.nvim_buf_set_text(res_buf, #row - 1, #col, #row - 1, #col, lines)
+				stream = stream .. text
+			end
+		end
+	end
+
+	local function on_exit()
+		vim.notify("Done.")
+		vim.api.nvim_set_current_win(res_win)
+		vim.cmd("diffthis")
+	end
+
+	local job = vim.fn.jobstart(command(encode(line1, line2)), {
 		clear_env = true,
-		env = { OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") },
-		stdout_buffered = true,
-		on_stdout = function(_, thread, _)
-			thread = vim.fn.json_decode(thread)
-			assert(thread ~= nil)
+		env = { OPENAI_API_KEY = os.getenv(config.options.openai_api_key) },
+		on_stdout = on_stdout,
+		on_exit = on_exit,
+	})
 
-			vim.fn.jobstart(commands.create_message(thread.id, req_lines), {
-				clear_env = true,
-				env = { OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") },
-				stdout_buffered = true,
-				on_stdout = function(_, message, _)
-					message = vim.fn.json_decode(message)
-					assert(message ~= nil)
+	vim.notify("Quering llm...")
 
-					vim.fn.jobstart(commands.create_run(thread.id, config.options.assistant_id), {
-						clear_env = true,
-						env = { OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") },
-						stdout_buffered = true,
-						on_stdout = function(_, run, _)
-							run = vim.fn.json_decode(run)
-							assert(run ~= nil)
-
-							-- Periodically check run status
-							repeat
-								vim.wait(2000)
-								vim.fn.jobstart(commands.retrive_run(thread.id, run.id), {
-									clear_env = true,
-									env = { OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") },
-									stdout_buffered = true,
-									on_stdout = function(_, new_run, _)
-										run = vim.fn.json_decode(new_run)
-										assert(run ~= nil)
-									end,
-								})
-							until run.status == "completed"
-
-							vim.fn.jobstart(commands.list_messages(thread.id), {
-								clear_env = true,
-								env = { OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") },
-								stdout_buffered = true,
-								on_stdout = function(_, messages, _)
-									messages = vim.fn.json_decode(messages)
-									assert(messages ~= nil)
-									local res = messages.data[1].content[1].text.value
-									local res_lines = vim.split(res, "\n")
-									for _ = 1, line1 - 1 do
-										table.insert(res_lines, 1, "")
-									end
-									vim.api.nvim_buf_set_lines(res_buf, 0, -1, false, res_lines)
-								end,
-							})
-						end,
-					})
-				end,
-			})
+	vim.api.nvim_buf_set_keymap(res_buf, "n", "x", "", {
+		callback = function()
+			vim.notify("Stop.")
+			vim.fn.jobstop(job)
 		end,
 	})
-	return {}
 end
 
 return assistant

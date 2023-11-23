@@ -1,22 +1,23 @@
 # ✒️ Dante
 
-A crapy and unpolished grammar checker powered by [GPT Assistant](https://openai.com/blog/introducing-gpts) and [Neovim builtin diff tool](https://neovim.io/doc/user/diff.html). Seriously, it's just a proof of concept.
+An unpolished grammar checker powered by OpenAI models and [Neovim builtin diff tool](https://neovim.io/doc/user/diff.html). Seriously, it's just a proof of concept.
 
 ![example screenshot](https://github.com/S1M0N38/dante.nvim/blob/main/image.png?raw=true)
 
 ## 💡 Idea
 
 I want to experiment with the newlly released [GPT Assistant API](https://platform.openai.com/docs/assistants/overview). Vim/Neovim builtin diff tool is a good way to highlight the differences between the original text and the suggested one.
+**Edit**: I move from GPT Assistant API back to *chat completions* API because it was easy to implement API in a non-blocking fashion.
 
 ## ✨ Features
 
-- Prompt selected line into GPT Assistant and highlight the differences with the original text.
+- Prompt selected line into LLM and highlight the differences with the original text.
 
 ## ⚡️ Requirements
 
 - Neovim >= **0.9**
 - curl
-- Access to OpenAI GPT Assistant API
+- Access to OpenAI API
 
 ## 📦 Installation
 
@@ -27,28 +28,24 @@ I want to experiment with the newlly released [GPT Assistant API](https://platfo
 {
   "s1m0n38/dante.nvim",
   opts = {
-	  assistant_id = "asst_........",
+    model = "gpt-4-1106-preview", -- best model but more expensive
+    temperature = 0, -- reduced creativity
+    prompt = "You are tasked as an assistant primarily responsible for rectifying errors within English text. Please amend spelling inaccuracies and augment grammar; ensure that the refined text closely adheres to the original version. Given that the text is authored in LaTeX intended for a master's thesis, please abide by the LaTeX syntax accordingly. Eschew informal expressions and choose terminology appropriate for a scientific manuscript. Provide your corrections in the form of the enhanced text only, devoid of commentary. Maintain the integrity of the original text's new lines and the spacing.", -- system prompt
   },
 }
 ```
 
 2. [get an OpenAI API key](https://platform.openai.com/docs/api-reference/introduction) and add it to your environment as `OPENAI_API_KEY`.
-1. Create a GPT Assistant and add its id to your configuration as `assistant_id`.
-
-For example I create a GPT Assistant with the following settings:
-
-- **Instructions**: `You are a helpful assistant whose job is to correct errors in English text. Correct spelling errors and improve grammar so that the generated text is as similar to the original as possible. The text is written in LaTeX and is for a master thesis. Reply only with the improved text without comments.`
-- **Model**: `gpt-3.5-turbo-16k`
 
 ## 🚀 Usage
 
 **Normal Mode**
 
-- `:Dante` send current line to GPT Assistant.
+- `:Dante` send current line to LLM.
 
 **Visual Mode**
 
-- `:'<,'>Dante` send selected lines to GPT Assistant.
+- `:'<,'>Dante` send selected lines to LLM.
 
 Read the [documentation](https://neovim.io/doc/user/diff.html) to learn how to navigate between and edit differences.
 
