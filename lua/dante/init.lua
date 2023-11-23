@@ -5,6 +5,8 @@ function dante.setup(options)
 end
 
 function dante.main(line1, line2)
+	vim.cmd("set diffopt=internal,filler,closeoff,vertical,algorithm:patience,followwrap,linematch:120")
+
 	-- Request
 	local req_buf = vim.api.nvim_get_current_buf()
 	local req_win = vim.api.nvim_get_current_win()
