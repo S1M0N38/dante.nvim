@@ -1,6 +1,11 @@
 local M = {}
 
-local defaults = {}
+local defaults = {
+	model = "gpt-3.5-turbo-1106",
+	prompt = "You are an helpful assistant.",
+	temperature = 0.5,
+	openai_api_key = "OPENAI_API_KEY",
+}
 
 M.options = {}
 
