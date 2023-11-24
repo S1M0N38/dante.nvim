@@ -4,9 +4,9 @@ function dante.setup(options)
 	require("dante.config").setup(options)
 end
 
-function dante.main(line1, line2)
 	vim.cmd("set diffopt=internal,filler,closeoff,vertical,algorithm:patience,followwrap,linematch:120")
 
+function dante.main(lines)
 	-- Request
 	local req_buf = vim.api.nvim_get_current_buf()
 	local req_win = vim.api.nvim_get_current_win()
@@ -28,7 +28,7 @@ function dante.main(line1, line2)
 	vim.api.nvim_set_current_win(req_win)
 
 	-- Query
-	require("dante.assistant").query(line1, line2, res_buf, res_win)
+	require("dante.assistant").query(lines, res_buf, res_win, req_win)
 end
 
 return dante
