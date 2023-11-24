@@ -2,7 +2,7 @@
 
 An unpolished grammar checker powered by OpenAI models and [Neovim builtin diff tool](https://neovim.io/doc/user/diff.html). Seriously, it's just a proof of concept.
 
-![example screenshot](https://github.com/S1M0N38/dante.nvim/blob/main/image.png?raw=true)
+![example usage](https://github.com/S1M0N38/dante.nvim/blob/main/usage.gif?raw=true)
 
 ## 💡 Idea
 
