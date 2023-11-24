@@ -60,7 +60,14 @@ I want to experiment with the newlly released [GPT Assistant API](https://platfo
 
 - `:'<,'>Dante` send selected lines to LLM.
 
-Read the [documentation](https://neovim.io/doc/user/diff.html) to learn how to navigate between and edit differences.
+Read the Neovim [documentation](https://neovim.io/doc/user/diff.html) to learn how to navigate between and edit differences.
+
+For obtaining the best results, you should:
+
+- Carefully write your own prompt for you specific use case.
+- Avoid breaking lines at fix column (e.g. 80). Instead, use a new line when you feel it's necessary (just like writing with pen and paper) or double new line for paragraph separation.
+- Selecting smaller chunks of text focus on the details but you may miss the big picture.
+- Use a powerful model like `gpt-4` but it's more expensive and slower.
 
 ## 🙏 Acknowledgments
 
