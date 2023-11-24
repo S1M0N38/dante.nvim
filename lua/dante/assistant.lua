@@ -62,6 +62,8 @@ function assistant.query(lines, res_buf, res_win, req_win)
 		vim.notify("Done.")
 		vim.api.nvim_set_current_win(res_win)
 		vim.cmd("diffthis")
+		vim.api.nvim_set_current_win(req_win)
+		vim.cmd("diffthis")
 	end
 
 	local job = vim.fn.jobstart(command(encode(lines)), {
