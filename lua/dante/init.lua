@@ -14,16 +14,8 @@ function dante.main(lines)
 	local linebreak = vim.wo.linebreak
 
 	-- Set options for diff mode
-	local diffopt = {
-		"internal",
-		"filler", -- add filler lines to align diff
-		"closeoff", -- disable diff when closing one diff window
-		"vertical",
-		"algorithm:patience", -- algorithm for compute diff
-		"followwrap", -- keep the same wrap options before diff
-		"linematch:" .. tostring(line_count),
-	}
-	vim.cmd("set diffopt=" .. table.concat(diffopt, ","))
+	local config = require("dante.config")
+	vim.cmd("set diffopt=" .. table.concat(config.options.diffopt, ","))
 
 	-- Response
 	vim.cmd("vsplit")
