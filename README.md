@@ -72,6 +72,7 @@ For obtaining the best results, you should:
 - Avoid breaking lines at fix column (e.g. 80). Instead, use a new line when you feel it's necessary (just like writing with pen and paper) or double new line for paragraph separation.
 - Selecting smaller chunks of text focus on the details but you may miss the big picture.
 - Use a powerful model like `gpt-4` but it's more expensive and slower.
+- For text file with a lot of lines, you may want to increase the "linematch" diffopt to 300 or more. This is a temporary workaround until I find a better solution.
 
 ## 🙏 Acknowledgments
 
