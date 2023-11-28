@@ -39,6 +39,7 @@ function dante.main(lines, line1, line2)
 		end
 	end
 	vim.api.nvim_buf_set_text(res_buf, 0, 0, 0, 0, context)
+	vim.api.nvim_win_set_cursor(res_win, { line1, 0 })
 
 	-- Focus back to request window
 	vim.api.nvim_set_current_win(req_win)
