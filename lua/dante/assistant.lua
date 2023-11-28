@@ -42,31 +42,28 @@ local function decode(res)
 	return res.choices[1].delta.content or ""
 end
 
-function assistant.query(lines, line, res_buf, res_win, req_win)
+function assistant.query(query, res_buf, callback)
+	local stream = ""
+
 	local function on_stdout(_, ress, _)
 		for _, res in pairs(ress) do
 			local text = decode(res)
 			if text ~= "" then
 				local lines = vim.split(text, "\n", { plain = true, trimempty = false })
-				local row = vim.api.nvim_buf_get_lines(res_buf, line - 1, line, false)
+				local row = vim.api.nvim_buf_get_lines(res_buf, 0, -1, false)
 				local col = row[#row] or ""
-				vim.api.nvim_buf_set_text(res_buf, line - 1, #col, line - 1, #col, lines)
-				if #lines > 1 then
-					line = line + 1
-				end
+				vim.api.nvim_buf_set_text(res_buf, #row - 1, #col, #row - 1, #col, lines)
+				stream = stream .. text
 			end
 		end
 	end
 
 	local function on_exit()
 		vim.notify("Done.")
-		vim.api.nvim_set_current_win(res_win)
-		vim.cmd("diffthis")
-		vim.api.nvim_set_current_win(req_win)
-		vim.cmd("diffthis")
+		callback()
 	end
 
-	local job = vim.fn.jobstart(command(encode(lines)), {
+	local job = vim.fn.jobstart(command(encode(query)), {
 		clear_env = true,
 		env = { OPENAI_API_KEY = os.getenv(config.options.openai_api_key) },
 		on_stdout = on_stdout,

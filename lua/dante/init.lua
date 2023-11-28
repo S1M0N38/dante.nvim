@@ -4,11 +4,10 @@ function dante.setup(options)
 	require("dante.config").setup(options)
 end
 
-function dante.main(lines, line1, line2)
+function dante.main(start_line, end_line)
 	-- Request
 	local req_win = vim.api.nvim_get_current_win()
 	local req_buf = vim.api.nvim_get_current_buf()
-	local line_count = vim.api.nvim_buf_line_count(req_buf)
 	local filetype = vim.bo.filetype
 	local wrap = vim.wo.wrap
 	local linebreak = vim.wo.linebreak
@@ -26,26 +25,28 @@ function dante.main(lines, line1, line2)
 	vim.api.nvim_win_set_option(res_win, "wrap", wrap)
 	vim.api.nvim_win_set_option(res_win, "linebreak", linebreak)
 
-	local context = {}
-	local query = {}
-	for i, line in ipairs(lines) do
-		if i < line1 or i > line2 then
-			table.insert(context, line)
-		else
-			if i == line1 or i == line2 then
-				table.insert(context, "")
-			end
-			table.insert(query, line)
-		end
-	end
-	vim.api.nvim_buf_set_text(res_buf, 0, 0, 0, 0, context)
-	vim.api.nvim_win_set_cursor(res_win, { line1, 0 })
+	-- Partition request buffer
+	local before_lines = vim.api.nvim_buf_get_lines(req_buf, 0, start_line, true)
+	local lines = vim.api.nvim_buf_get_lines(req_buf, start_line, end_line, true)
+	local after_lines = vim.api.nvim_buf_get_lines(req_buf, end_line, -1, true)
 
-	-- Focus back to request window
-	vim.api.nvim_set_current_win(req_win)
+	-- Add line before the response
+	vim.api.nvim_buf_set_lines(res_buf, 0, 0, true, before_lines)
+	vim.api.nvim_win_set_cursor(res_win, { start_line, 0 })
+
+	local function callback()
+		-- Add line after the response
+		vim.api.nvim_buf_set_lines(res_buf, -1, -1, true, after_lines)
+
+		-- Calculate diff
+		vim.api.nvim_set_current_win(res_win)
+		vim.cmd("diffthis")
+		vim.api.nvim_set_current_win(req_win)
+		vim.cmd("diffthis")
+	end
 
 	-- Query
-	require("dante.assistant").query(query, line1, res_buf, res_win, req_win)
+	require("dante.assistant").query(lines, res_buf, callback)
 end
 
 return dante
