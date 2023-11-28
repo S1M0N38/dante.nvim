@@ -42,18 +42,18 @@ local function decode(res)
 	return res.choices[1].delta.content or ""
 end
 
-function assistant.query(lines, res_buf, res_win, req_win)
-	local stream = ""
-
+function assistant.query(lines, line, res_buf, res_win, req_win)
 	local function on_stdout(_, ress, _)
 		for _, res in pairs(ress) do
 			local text = decode(res)
 			if text ~= "" then
 				local lines = vim.split(text, "\n", { plain = true, trimempty = false })
-				local row = vim.api.nvim_buf_get_lines(res_buf, 0, -1, false)
+				local row = vim.api.nvim_buf_get_lines(res_buf, line - 1, line, false)
 				local col = row[#row] or ""
-				vim.api.nvim_buf_set_text(res_buf, #row - 1, #col, #row - 1, #col, lines)
-				stream = stream .. text
+				vim.api.nvim_buf_set_text(res_buf, line - 1, #col, line - 1, #col, lines)
+				if #lines > 1 then
+					line = line + 1
+				end
 			end
 		end
 	end
