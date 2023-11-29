@@ -11,6 +11,7 @@ function dante.main(start_line, end_line)
 	local filetype = vim.bo.filetype
 	local wrap = vim.wo.wrap
 	local linebreak = vim.wo.linebreak
+	local breakindent = vim.wo.breakindent
 
 	-- Set options for diff mode
 	local config = require("dante.config")
@@ -24,6 +25,7 @@ function dante.main(start_line, end_line)
 	vim.api.nvim_buf_set_option(res_buf, "filetype", filetype)
 	vim.api.nvim_win_set_option(res_win, "wrap", wrap)
 	vim.api.nvim_win_set_option(res_win, "linebreak", linebreak)
+	vim.api.nvim_win_set_option(res_win, "breakindent", breakindent)
 
 	-- Partition request buffer
 	local before_lines = vim.api.nvim_buf_get_lines(req_buf, 0, start_line, true)
