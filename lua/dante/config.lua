@@ -5,6 +5,7 @@ local defaults = {
 	prompt = "You are an helpful assistant.",
 	temperature = 0.5,
 	openai_api_key = "OPENAI_API_KEY",
+	wo = { "wrap", "linebreak", "breakindent", "breakindentopt", "showbreak" },
 	diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
 }
 

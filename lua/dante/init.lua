@@ -9,8 +9,6 @@ function dante.main(start_line, end_line)
 	local req_win = vim.api.nvim_get_current_win()
 	local req_buf = vim.api.nvim_get_current_buf()
 	local filetype = vim.bo.filetype
-	local wrap = vim.wo.wrap
-	local linebreak = vim.wo.linebreak
 
 	-- Set options for diff mode
 	local config = require("dante.config")
@@ -22,8 +20,10 @@ function dante.main(start_line, end_line)
 	local res_buf = vim.api.nvim_create_buf(false, true)
 	vim.api.nvim_win_set_buf(res_win, res_buf)
 	vim.api.nvim_buf_set_option(res_buf, "filetype", filetype)
-	vim.api.nvim_win_set_option(res_win, "wrap", wrap)
-	vim.api.nvim_win_set_option(res_win, "linebreak", linebreak)
+
+	for _, wo in pairs(config.options.wo) do
+		vim.api.nvim_win_set_option(res_win, wo, vim.api.nvim_win_get_option(req_win, wo))
+	end
 
 	-- Partition request buffer
 	local before_lines = vim.api.nvim_buf_get_lines(req_buf, 0, start_line, true)
