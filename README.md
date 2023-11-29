@@ -76,7 +76,7 @@ For obtaining the best results, you should:
 
 ## ⚠️ Warnings
 
-Be cautious of the text your are feeding into Dante. There is no mechanism to prevent prompt injection and the resulting text can be unexpected.
+Be cautious of the text your are feeding into Dante. There is no mechanism to mitigate prompt injection and the resulting text can be unexpected.
 
 ![example prompt-injection](https://github.com/S1M0N38/dante.nvim/blob/main/prompt-injection.png?raw=true)
 
