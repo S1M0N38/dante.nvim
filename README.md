@@ -74,6 +74,12 @@ For obtaining the best results, you should:
 - Use a powerful model like `gpt-4` but it's more expensive and slower.
 - For text file with a lot of lines, you may want to increase the "linematch" diffopt to 300 or more. This is a temporary workaround until I find a better solution.
 
+## ⚠️ Warnings
+
+Be cautious of the text your are feeding into Dante. There is no mechanism to prevent prompt injection and the resulting text can be unexpected.
+
+![example prompt-injection](https://github.com/S1M0N38/dante.nvim/blob/main/prompt-injection.png?raw=true)
+
 ## 🙏 Acknowledgments
 
 This plugin was heavily inspired by:
