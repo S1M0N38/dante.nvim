@@ -1,3 +1,3 @@
 vim.api.nvim_create_user_command("Dante", function(args)
-	require("dante").main(args.line1, args.line2)
-end, { range = true })
+	require("dante").main(args.args, args.line1, args.line2)
+end, { range = true, nargs = 1 })

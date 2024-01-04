@@ -1,11 +1,12 @@
 local config = require("dante.config")
 local assistant = {}
 
-local function encode(lines)
+local function encode(preset, lines)
+	preset = config.options.presets[preset]
 	local messages = {
 		{
 			role = "system",
-			content = config.options.prompt,
+			content = preset.prompt,
 		},
 		{
 			role = "user",
@@ -13,8 +14,8 @@ local function encode(lines)
 		},
 	}
 	local json = vim.fn.json_encode({
-		model = config.options.model,
-		temperature = config.options.temperature,
+		model = preset.model,
+		temperature = preset.temperature,
 		stream = true,
 		messages = messages,
 	})
@@ -42,7 +43,7 @@ local function decode(res)
 	return res.choices[1].delta.content or ""
 end
 
-function assistant.query(query, res_buf, callback)
+function assistant.query(preset, query, res_buf, callback)
 	local stream = ""
 
 	local function on_stdout(_, ress, _)
@@ -63,7 +64,7 @@ function assistant.query(query, res_buf, callback)
 		callback()
 	end
 
-	local job = vim.fn.jobstart(command(encode(query)), {
+	local job = vim.fn.jobstart(command(encode(preset, query)), {
 		clear_env = true,
 		env = { OPENAI_API_KEY = os.getenv(config.options.openai_api_key) },
 		on_stdout = on_stdout,

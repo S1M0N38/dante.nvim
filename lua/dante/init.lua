@@ -4,7 +4,7 @@ function dante.setup(options)
 	require("dante.config").setup(options)
 end
 
-function dante.main(start_line, end_line)
+function dante.main(preset, start_line, end_line)
 	-- Request
 	local req_win = vim.api.nvim_get_current_win()
 	local req_buf = vim.api.nvim_get_current_buf()
@@ -48,7 +48,7 @@ function dante.main(start_line, end_line)
 	end
 
 	-- Query
-	require("dante.assistant").query(lines, res_buf, callback)
+	require("dante.assistant").query(preset, lines, res_buf, callback)
 end
 
 return dante
