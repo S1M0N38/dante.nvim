@@ -10,6 +10,7 @@ local defaults = {
 		},
 	},
 	openai_api_key = "OPENAI_API_KEY",
+	base_url = "https://api.openai.com/v1",
 	diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
 }
 

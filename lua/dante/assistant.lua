@@ -28,7 +28,7 @@ local function command(req)
 		"--no-buffer",
 		'--header "Authorization: Bearer $OPENAI_API_KEY"',
 		'--header "content-type: application/json"',
-		"--url https://api.openai.com/v1/chat/completions",
+		"--url " .. config.options.base_url .. "/chat/completions",
 		"--data " .. vim.fn.shellescape(req),
 	}
 	return "curl " .. table.concat(args, " ")
