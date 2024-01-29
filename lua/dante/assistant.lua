@@ -72,7 +72,7 @@ function assistant.query(preset, query, res_buf, callback)
 
 	local job = vim.fn.jobstart(command(encode(preset, query)), {
 		clear_env = true,
-		env = { OPENAI_API_KEY = os.getenv(config.options.openai_api_key) },
+		env = { OPENAI_API_KEY = os.getenv(config.options.openai_api_key) or "" },
 		on_stdout = on_stdout,
 		on_exit = on_exit,
 	})
