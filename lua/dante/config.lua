@@ -3,7 +3,7 @@ local M = {}
 local defaults = {
 	presets = {
 		default = {
-			model = "gpt-3.5-turbo-1106",
+			model = "gpt-3.5-turbo",
 			prompt = "You are an helpful assistant.",
 			temperature = 1,
 		},
