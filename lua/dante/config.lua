@@ -6,6 +6,7 @@ local defaults = {
 			model = "gpt-3.5-turbo",
 			prompt = "You are an helpful assistant.",
 			temperature = 1,
+			stream = false,
 		},
 	},
 	openai_api_key = "OPENAI_API_KEY",

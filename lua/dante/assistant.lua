@@ -16,7 +16,7 @@ local function encode(preset, lines)
 	local json = vim.fn.json_encode({
 		model = preset.model,
 		temperature = preset.temperature,
-		stream = true,
+		stream = preset.stream,
 		messages = messages,
 	})
 	return json
@@ -34,13 +34,19 @@ local function command(req)
 	return "curl " .. table.concat(args, " ")
 end
 
-local function decode(res)
+local function decode(preset, res)
+	preset = config.options.presets[preset]
 	if #(res or "") < 20 then
 		return ""
 	end
-	res = vim.fn.json_decode(string.sub(res, 7))
-	assert(res ~= nil, "res is nil")
-	return res.choices[1].delta.content or ""
+	if preset.stream then
+		res = vim.fn.json_decode(string.sub(res, 7))
+		assert(res ~= nil, "res is nil")
+		return res.choices[1].delta.content or ""
+	else
+		res = vim.fn.json_decode(res)
+		return res.choices[1].message.content
+	end
 end
 
 function assistant.query(preset, query, res_buf, callback)
@@ -48,7 +54,7 @@ function assistant.query(preset, query, res_buf, callback)
 
 	local function on_stdout(_, ress, _)
 		for _, res in pairs(ress) do
-			local text = decode(res)
+			local text = decode(preset, res)
 			if text ~= "" then
 				local lines = vim.split(text, "\n", { plain = true, trimempty = false })
 				local row = vim.api.nvim_buf_get_lines(res_buf, 0, -1, false)
