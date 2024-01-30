@@ -20,7 +20,7 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
 
 - Neovim >= **0.9**
 - curl
-- Access to OpenAI API
+- Access to OpenAI API or compatible API (e.g. [LiteLLM](https://docs.litellm.ai/docs/simple_proxy))
 
 ## 📦 Installation
 
