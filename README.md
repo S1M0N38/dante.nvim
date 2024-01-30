@@ -71,21 +71,21 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
 
 **Normal Mode**
 
-- `:Dante <preset>` send current line to LLM. If no preset is specified, the `default` preset will be used.
+- `:Dante <preset>` sends the current line to LLM. If no preset is specified, the `default` preset will be used.
 
 **Visual Mode**
 
-- `:'<,'>Dante <preset>` send selected lines to LLM. If no preset is specified, the `default` preset will be used.
+- `:'<,'>Dante <preset>` sends the selected lines to LLM. If no preset is specified, the `default` preset will be used.
 
 Read the Neovim [documentation](https://neovim.io/doc/user/diff.html) to learn how to navigate between and edit differences.
 
 For obtaining the best results, you should:
 
-- Carefully write your own prompt for you specific use case.
-- Avoid breaking lines at fix column (e.g. 80). Instead, use a new line when you feel it's necessary (just like writing with pen and paper) or double new line for paragraph separation.
-- Selecting smaller chunks of text focus on the details but you may miss the big picture.
-- Use a powerful model like `gpt-4` but it's more expensive and slower.
-- For text file with a lot of lines, you may want to increase the "linematch" diffopt to 300 or more. This is a temporary workaround until I find a better solution.
+- Carefully write your own prompt for your specific use case.
+- Avoid breaking lines at a fixed column (e.g. 80). Instead, use a new line when you feel it's necessary (just like writing with pen and paper) or a double new line for paragraph separation.
+- Selecting smaller chunks of text focuses on the details, but you may miss the big picture.
+- Use a powerful model like `gpt-4`, but it's more expensive and slower.
+- For text files with a lot of lines, you may want to increase the "linematch" diffopt to 300 or more. This is a temporary workaround until I find a better solution.
 
 ## ⚠️ Warnings
 
