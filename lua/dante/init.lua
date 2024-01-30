@@ -15,7 +15,8 @@ function dante.main(preset, start_line, end_line)
 
 	-- Set options for diff mode
 	local config = require("dante.config")
-	vim.cmd("set diffopt=" .. table.concat(config.options.diffopt, ","))
+	preset = config.options.presets[preset] -- this store all the config for the query
+	vim.cmd("set diffopt=" .. table.concat(preset.diffopt, ","))
 
 	-- Response
 	vim.cmd("vsplit")

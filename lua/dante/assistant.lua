@@ -1,8 +1,6 @@
-local config = require("dante.config")
 local assistant = {}
 
 local function encode(preset, lines)
-	preset = config.options.presets[preset]
 	local messages = {
 		{
 			role = "system",
@@ -22,20 +20,19 @@ local function encode(preset, lines)
 	return json
 end
 
-local function command(req)
+local function command(preset, req)
 	local args = {
 		"--silent",
 		"--no-buffer",
 		'--header "Authorization: Bearer $OPENAI_API_KEY"',
 		'--header "content-type: application/json"',
-		"--url " .. config.options.base_url .. "/chat/completions",
+		"--url " .. preset.base_url .. "/chat/completions",
 		"--data " .. vim.fn.shellescape(req),
 	}
 	return "curl " .. table.concat(args, " ")
 end
 
 local function decode(preset, res)
-	preset = config.options.presets[preset]
 	if #(res or "") < 20 then
 		return ""
 	end
@@ -70,9 +67,9 @@ function assistant.query(preset, query, res_buf, callback)
 		callback()
 	end
 
-	local job = vim.fn.jobstart(command(encode(preset, query)), {
+	local job = vim.fn.jobstart(command(preset, encode(preset, query)), {
 		clear_env = true,
-		env = { OPENAI_API_KEY = os.getenv(config.options.openai_api_key) or "" },
+		env = { OPENAI_API_KEY = os.getenv(preset.env_var) or "" },
 		on_stdout = on_stdout,
 		on_exit = on_exit,
 	})
