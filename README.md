@@ -31,10 +31,23 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
 {
   "s1m0n38/dante.nvim",
   opts = {
-    model = "gpt-4-1106-preview", -- best model but more expensive
-    temperature = 0, -- reduced creativity
-    prompt = "You are tasked as an assistant primarily responsible for rectifying errors within English text. Please amend spelling inaccuracies and augment grammar; ensure that the refined text closely adheres to the original version. Given that the text is authored in LaTeX intended for a master's thesis, please abide by the LaTeX syntax accordingly. Eschew informal expressions and choose terminology appropriate for a scientific manuscript. Provide your corrections in the form of the enhanced text only, devoid of commentary. Maintain the integrity of the original text's new lines and the spacing.", -- system prompt
-    diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },  -- :help diffopt
+    -- these are the global options options and will be used as default in every preset
+    -- If global options are not specified, the plugin will use the default values
+    model = "gpt-3.5-turbo",
+    temperature = 0,
+
+    presets = {
+      default = {
+        -- when options are not specified, the global config will be used
+      },
+      readme = {
+        -- these options will override the global config
+        model = "gpt-4",
+        temperature = 0.3,
+        prompt = "You are tasked as an assistant primarily responsible for rectifying errors within English text. Please amend spelling inaccuracies and augment grammar; ensure that the refined text closely adheres to the original version. Given that the text is authored in markdown intended for a README file, please abide by the markdown syntax accordingly. Provide your corrections in the form of the enhanced text only, devoid of commentary. Maintain the integrity of the original text's new lines and the spacing. Do NOT enclose the genereate text into triple ticks.",
+      },
+      -- Add more presets here...
+    },
   },
 
   -- Not required but it improve upon built-in diff view with char diff
