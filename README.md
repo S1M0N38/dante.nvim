@@ -71,11 +71,11 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
 
 **Normal Mode**
 
-- `:Dante` send current line to LLM.
+- `:Dante <preset>` send current line to LLM. If no preset is specified, the `default` preset will be used.
 
 **Visual Mode**
 
-- `:'<,'>Dante` send selected lines to LLM.
+- `:'<,'>Dante <preset>` send selected lines to LLM. If no preset is specified, the `default` preset will be used.
 
 Read the Neovim [documentation](https://neovim.io/doc/user/diff.html) to learn how to navigate between and edit differences.
 
