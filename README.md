@@ -6,9 +6,9 @@ An unpolished grammar checker powered by OpenAI models and [Neovim builtin diff 
 
 ## 💡 Idea
 
-I want to experiment with the newlly released [GPT Assistant API](https://platform.openai.com/docs/assistants/overview). Vim/Neovim builtin diff tool is a good way to highlight the differences between the original text and the suggested one.
+I wanted to experiment with the newly released [GPT Assistant API](https://platform.openai.com/docs/assistants/overview). Vim/Neovim's builtin diff tool is a good way to highlight the differences between the original text and the suggested one.
 
-**Edit**: I move from GPT Assistant API back to *chat completions* API because it was easy to implement API in a non-blocking fashion.
+**Edit**: I moved from the GPT Assistant API back to the *chat completions* API because it was easier to implement the API in a non-blocking fashion.
 
 *The detailed reasons why I decided to develop dante.nvim are explained in this [Reddit post](https://www.reddit.com/r/neovim/comments/182p87j/dantenvim_a_simple_ai_writing_assistant/).*
 
