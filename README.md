@@ -57,8 +57,20 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
       keys = {
         { "[z", "<Plug>JumpDiffCharPrevStart", desc = "Previous diff", silent = true },
         { "]z", "<Plug>JumpDiffCharNextStart", desc = "Next diff", silent = true },
-        { "do", "<Plug>GetDiffCharPair", desc = "Obtain diff", silent = true },
-        { "dp", "<Plug>PutDiffCharPair", desc = "Put diff", silent = true },
+        -- { "do", "<Plug>GetDiffCharPair", desc = "Obtain diff", silent = true },
+        -- { "dp", "<Plug>PutDiffCharPair", desc = "Put diff", silent = true },
+        {
+          "do",
+          "<Plug>GetDiffCharPair | <Plug>JumpDiffCharNextStart",
+          desc = "Obtain diff and Next diff",
+          silent = true,
+        },
+        {
+          "dp",
+          "<Plug>PutDiffCharPair | <Plug>JumpDiffCharNextStart",
+          desc = "Put diff and Next diff",
+          silent = true,
+        },
       },
     },
   },
