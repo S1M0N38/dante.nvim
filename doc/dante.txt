@@ -1,0 +1,87 @@
+================================================================================
+INTRODUCTION                                                          *[plugin_name]*
+
+[plugin_name].nvim is a simple plugin to help you [describe main functionality].
+
+Table of contents:
+
+1. SETUP: Install and setup the plugin.                         |[plugin_name]-setup|
+2. COMMANDS: Commands provided by the plugin.                |[plugin_name]-commands|
+3. LSP: Explaining LSP support for [language/tool].               |[plugin_name]-lsp|
+
+
+================================================================================
+SETUP                                                           *[plugin_name]-setup*
+
+It's highly recommended to use a plugin manager to install [plugin_name].nvim. For
+example, using `lazy.nvim`:
+
+>lua
+    {
+      "[GitHub_username]/[plugin_name].nvim",
+      cmd = "[PrimaryCommand]",
+      opts = { },
+      keys = {
+        { "<leader>[key]", desc = "[Description]" },
+        { "<leader>[key]", "<cmd>[PrimaryCommand]<cr>", desc = "[Run Description]" },
+        { "<leader>[key]", "<cmd>[StopCommand]<cr>", desc = "[Stop Description]" },
+      },
+    }
+<
+
+Usually, in the installation example, the plugin author provides the bare
+minimum setup. However, [plugin_name].nvim has very few options so it makes sense to
+discuss them here. Here is the breakdown of the previous example:
+
+- `[GitHub_username]/[plugin_name].nvim`: Where to download the plugin hosted on GitHub.
+- `cmd`: Load this plugin only when the `:[PrimaryCommand]` command is called.
+- `opts`: A table with plugin options. See |[plugin_name].setup()|.
+- `keys`: Key mappings for the plugin.
+
+So with this configuration, when the command `:[PrimaryCommand]` is called:
+
+1. The `[plugin_name].nvim` plugin is loaded
+2. |[plugin_name].setup()| is called with the `opts` table
+3. The command `:[PrimaryCommand]` is run. See |[plugin_name]-commands|.
+
+
+                                                              *[plugin_name].setup()*
+[plugin_name].setup({opts}) ~
+
+  The `<plugin>.setup()` function is a convention used by many plugins to set
+  up options provided by the user. It's so common that `lazy.nvim`
+  automatically calls the `<plugin>.setup()` function using the `opts` table.
+
+  The table `opts` that you specify, will be merged with the default options
+  which are:
+
+>lua
+  {
+    [Option1] = "[default_value]",
+    [Option2] = "[default_value]",
+    [Option3] = [boolean_value],
+  }
+<
+
+  - `[Option1]`: [Description of Option1]
+  - `[Option2]`: [Description of Option2]
+  - `[Option3]`: [Description of Option3]
+
+
+================================================================================
+COMMANDS                                                     *[plugin_name]-commands*
+
+User commands, that is commands that start with `:` followed by a capital
+letter, are the main way to interact with plugins. The available commands
+provided by this plugin are:
+
+:[PrimaryCommand] [optional_parameter] ~
+  [Description of what happens when PrimaryCommand is run]
+
+:[StopCommand]  ~
+  [Description of what happens when StopCommand is run]
+
+
+==============================================================================
+ vim:tw=78:ts=8:et:ft=help:norl:
+
