@@ -2,7 +2,9 @@
 
 An unpolished grammar checker powered by OpenAI models and [Neovim's builtin diff tool](https://neovim.io/doc/user/diff.html). Seriously, it's just a proof of concept.
 
-![example usage](https://github.com/S1M0N38/dante.nvim/blob/main/usage.gif?raw=true)
+https://github.com/S1M0N38/dante.nvim/assets/22257750/33ed003f-5160-428f-b3a2-dc4bb697f76b
+
+
 
 ## 💡 Idea
 
@@ -103,7 +105,9 @@ For obtaining the best results, you should:
 
 Be cautious of the text you are feeding into Dante. There is no mechanism to mitigate prompt injection, and the resulting text can be unexpected.
 
-![example prompt-injection](https://github.com/S1M0N38/dante.nvim/blob/main/prompt-injection.png?raw=true)
+![example-prompt-injection](https://github.com/S1M0N38/dante.nvim/assets/22257750/c707db0f-4f67-4286-b774-fee11963c3dc)
+
+
 
 ## 🙏 Acknowledgments
 
