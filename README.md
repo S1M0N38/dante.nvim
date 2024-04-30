@@ -1,6 +1,6 @@
 # ✒️ Dante
 
-An unpolished grammar checker powered by OpenAI models and [Neovim builtin diff tool](https://neovim.io/doc/user/diff.html). Seriously, it's just a proof of concept.
+An unpolished grammar checker powered by OpenAI models and [Neovim's builtin diff tool](https://neovim.io/doc/user/diff.html). Seriously, it's just a proof of concept.
 
 ![example usage](https://github.com/S1M0N38/dante.nvim/blob/main/usage.gif?raw=true)
 
@@ -20,7 +20,7 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
 
 - Neovim >= **0.9**
 - curl
-- Access to OpenAI API or compatible API (e.g. [LiteLLM](https://docs.litellm.ai/docs/simple_proxy))
+- Access to OpenAI API or compatible API (e.g., [LiteLLM](https://docs.litellm.ai/docs/simple_proxy))
 
 ## 📦 Installation
 
@@ -31,7 +31,7 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
 {
   "s1m0n38/dante.nvim",
   opts = {
-    -- these are the global options options and will be used as default in every preset
+    -- these are the global options and will be used as default in every preset
     -- If global options are not specified, the plugin will use the default values
     model = "gpt-3.5-turbo",
     temperature = 0,
@@ -44,13 +44,13 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
         -- these options will override the global config
         model = "gpt-4",
         temperature = 0.3,
-        prompt = "You are tasked as an assistant primarily responsible for rectifying errors within English text. Please amend spelling inaccuracies and augment grammar; ensure that the refined text closely adheres to the original version. Given that the text is authored in markdown intended for a README file, please abide by the markdown syntax accordingly. Provide your corrections in the form of the enhanced text only, devoid of commentary. Maintain the integrity of the original text's new lines and the spacing. Do NOT enclose the genereate text into triple ticks.",
+        prompt = "You are tasked as an assistant primarily responsible for rectifying errors within English text. Please amend spelling inaccuracies and augment grammar; ensure that the refined text closely adheres to the original version. Given that the text is authored in Markdown intended for a README file, please abide by the Markdown syntax accordingly. Provide your corrections in the form of the enhanced text only, devoid of commentary. Maintain the integrity of the original text's new lines and the spacing. Do NOT enclose the generated text into triple ticks.",
       },
       -- Add more presets here...
     },
   },
 
-  -- Not required but it improve upon built-in diff view with char diff
+  -- Not required but it improves upon built-in diff view with char diff
   dependencies = {
     {
       "rickhowe/diffchar.vim",
@@ -77,7 +77,7 @@ I wanted to experiment with the newly released [GPT Assistant API](https://platf
 }
 ```
 
-2. [get an OpenAI API key](https://platform.openai.com/docs/api-reference/introduction) and add it to your environment as `OPENAI_API_KEY`.
+2. [Get an OpenAI API key](https://platform.openai.com/docs/api-reference/introduction) and add it to your environment as `OPENAI_API_KEY`.
 
 ## 🚀 Usage
 
@@ -94,14 +94,14 @@ Read the Neovim [documentation](https://neovim.io/doc/user/diff.html) to learn h
 For obtaining the best results, you should:
 
 - Carefully write your own prompt for your specific use case.
-- Avoid breaking lines at a fixed column (e.g. 80). Instead, use a new line when you feel it's necessary (just like writing with pen and paper) or a double new line for paragraph separation.
+- Avoid breaking lines at a fixed column (e.g., 80). Instead, use a new line when you feel it's necessary (just like writing with pen and paper) or a double new line for paragraph separation.
 - Selecting smaller chunks of text focuses on the details, but you may miss the big picture.
 - Use a powerful model like `gpt-4`, but it's more expensive and slower.
 - For text files with a lot of lines, you may want to increase the "linematch" diffopt to 300 or more. This is a temporary workaround until I find a better solution.
 
 ## ⚠️ Warnings
 
-Be cautious of the text your are feeding into Dante. There is no mechanism to mitigate prompt injection and the resulting text can be unexpected.
+Be cautious of the text you are feeding into Dante. There is no mechanism to mitigate prompt injection, and the resulting text can be unexpected.
 
 ![example prompt-injection](https://github.com/S1M0N38/dante.nvim/blob/main/prompt-injection.png?raw=true)
 
