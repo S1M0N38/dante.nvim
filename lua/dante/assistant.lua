@@ -78,7 +78,7 @@ function assistant.query(preset, query, res_buf, callback)
 
 	vim.api.nvim_buf_set_keymap(res_buf, "n", "x", "", {
 		callback = function()
-			vim.notify("Stop.")
+			vim.notify("Stopping...")
 			vim.fn.jobstop(job)
 		end,
 	})
