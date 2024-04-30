@@ -29,8 +29,8 @@ function dante.main(preset, start_line, end_line)
 	vim.api.nvim_set_option_value("breakindent", breakindent, { win = res_win })
 
 	-- Partition request buffer
-	local before_lines = vim.api.nvim_buf_get_lines(req_buf, 0, start_line, true)
-	local lines = vim.api.nvim_buf_get_lines(req_buf, start_line, end_line, true)
+	local before_lines = vim.api.nvim_buf_get_lines(req_buf, 0, start_line - 1, true)
+	local lines = vim.api.nvim_buf_get_lines(req_buf, start_line - 1, end_line, true)
 	local after_lines = vim.api.nvim_buf_get_lines(req_buf, end_line, -1, true)
 
 	-- Add line before the response
