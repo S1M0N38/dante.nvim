@@ -1,44 +1,64 @@
-local M = {}
+local config = {}
 
-local defaults = {
+config.defaults = {
 
+	-- notify with extra information
+	verbose = false,
+
+	-- list of presets
 	presets = {
-		default = {
-			-- if not specified, will use global config
-			-- model = "gpt-3.5-turbo",
-			-- prompt = "You are an helpful assistant.",
-			-- temperature = 1,
-			-- stream = false,
-			-- base_url = "https://api.openai.com/v1",
-			-- diffopt = { ... },
-		},
-		-- another_preset = {
-		--  -- you can define as many presets as you want
-		--  -- defining config here will override global config for this preset
-		-- },
-	},
+		["default"] = {
+			client = {
+				base_url = "https://api.openai.com/v1",
+				api_key = nil,
+			},
+			request = {
+				model = "gpt-3.5-turbo",
+				temperature = 1.0,
+				stream = false,
+				messages = {
+					{
+						role = "system",
+						content = [[
+You are an assistant responsible for correcting errors in text.
+Refine the spelling and grammar while closely adhering to the original version.
 
-	-- Globals config will be used as default for all presets
-	model = "gpt-3.5-turbo",
-	prompt = "You are an helpful assistant.",
-	temperature = 1,
-	stream = false,
-	env_var = "OPENAI_API_KEY",
-	base_url = "https://api.openai.com/v1",
-	diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
+- If the text is formatted in a specific syntax (e.g. LaTeX, Markdown, Vimdoc, ...), abide by that syntax.
+- Use the same language and terminology appropriate for the context.
+- Return only the enhanced text without commentary.
+- Maintain the integrity of the original text's line breaks and spacing.
+
+Do NOT return the generated text enclosed in triple ticks (```).
+]],
+					},
+					{
+						role = "user",
+						content = "{{'<,'>}}",
+					},
+				},
+			},
+		},
+	},
 }
 
-M.options = {}
+---@class ClientOptions
+---@field base_url string: base url of the api
+---@field api_key string: api key
 
-function M.setup(options)
-	M.options = vim.tbl_deep_extend("force", {}, defaults, options or {})
-	for _, preset in pairs(M.options.presets) do
-		for opt, value in pairs(M.options) do
-			if opt ~= "presets" then
-				preset[opt] = preset[opt] or value
-			end
-		end
-	end
+---@class Preset
+---@field client ClientOptions: client options
+---@field request RequestObject: request object
+
+---@class Options
+---@field verbose boolean: report the usage of the model with vim.notify
+---@field presets Preset[]: list of presets
+config.options = {}
+
+---Setup the ai.nvim client options.
+---It must be called before using other ai.nvim functions.
+---@param opts Options: config table
+config.setup = function(opts)
+	config.options = vim.tbl_deep_extend("force", {}, config.defaults, opts or {})
 end
 
-return M
+return config
