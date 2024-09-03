@@ -18,6 +18,7 @@ example, using `lazy.nvim`:
 >lua
     {
       "S1M0N38/dante.nvim",
+      lazy = true,
       cmd = "Dante",
       opts = {
         presets = {
@@ -28,6 +29,12 @@ example, using `lazy.nvim`:
             },
           }
         }
+      }
+      dependencies = {
+        {
+          "S1M0N38/ai.nvim",
+          version="~1.0.0",
+        },
       }
     }
 <
