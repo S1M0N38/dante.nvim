@@ -1,87 +1,147 @@
 ================================================================================
-INTRODUCTION                                                          *[plugin_name]*
+INTRODUCTION                                                           *dante*
 
-[plugin_name].nvim is a simple plugin to help you [describe main functionality].
+dante.nvim is a simple writing plugin powered by LLM with diff view.
 
 Table of contents:
 
-1. SETUP: Install and setup the plugin.                         |[plugin_name]-setup|
-2. COMMANDS: Commands provided by the plugin.                |[plugin_name]-commands|
-3. LSP: Explaining LSP support for [language/tool].               |[plugin_name]-lsp|
-
+1. SETUP: Install and setup the plugin.                          |dante-setup|
+2. PLACEHODERS: Inject context in request messages.       |dante-placeholders|
+3. COMMANDS: Commands provided by the plugin.              |commands-commands|
 
 ================================================================================
-SETUP                                                           *[plugin_name]-setup*
+SETUP                                                            *dante-setup*
 
-It's highly recommended to use a plugin manager to install [plugin_name].nvim. For
+It's highly recommended to use a plugin manager to install dante.nvim. For
 example, using `lazy.nvim`:
 
 >lua
     {
-      "[GitHub_username]/[plugin_name].nvim",
-      cmd = "[PrimaryCommand]",
-      opts = { },
-      keys = {
-        { "<leader>[key]", desc = "[Description]" },
-        { "<leader>[key]", "<cmd>[PrimaryCommand]<cr>", desc = "[Run Description]" },
-        { "<leader>[key]", "<cmd>[StopCommand]<cr>", desc = "[Stop Description]" },
-      },
+      "S1M0N38/dante.nvim",
+      cmd = "Dante",
+      opts = {
+        presets = {
+          ["default"] = {
+            client = {
+              base_url = "https://api.openai.com/v1",     -- Select provider
+              api_key = vim.fn.getenv("OPENAI_API_KEY"),  -- Required
+            },
+          }
+        }
+      }
     }
 <
 
 Usually, in the installation example, the plugin author provides the bare
-minimum setup. However, [plugin_name].nvim has very few options so it makes sense to
+minimum setup. However, dante.nvim has very few options so it makes sense to
 discuss them here. Here is the breakdown of the previous example:
 
-- `[GitHub_username]/[plugin_name].nvim`: Where to download the plugin hosted on GitHub.
-- `cmd`: Load this plugin only when the `:[PrimaryCommand]` command is called.
-- `opts`: A table with plugin options. See |[plugin_name].setup()|.
-- `keys`: Key mappings for the plugin.
+- `S1M0N38/dante.nvim`: Where to download the plugin hosted on GitHub.
+- `cmd`: Load this plugin only when the `:Dante` command is called.
+- `opts`: A table with plugin options. See |dante.setup()|.
 
-So with this configuration, when the command `:[PrimaryCommand]` is called:
+So with this configuration, when the command `:Dante` is called:
 
-1. The `[plugin_name].nvim` plugin is loaded
-2. |[plugin_name].setup()| is called with the `opts` table
-3. The command `:[PrimaryCommand]` is run. See |[plugin_name]-commands|.
+1. The `dante.nvim` plugin is loaded
+2. |dante.setup()| is called with the `opts` table
+3. The command `:Dante` is run. See |dante-commands|.
 
 
-                                                              *[plugin_name].setup()*
-[plugin_name].setup({opts}) ~
+                                                               *dante.setup()*
+dante.setup({opts}) ~
 
-  The `<plugin>.setup()` function is a convention used by many plugins to set
+  The `dante.setup()` function is a convention used by many plugins to set
   up options provided by the user. It's so common that `lazy.nvim`
-  automatically calls the `<plugin>.setup()` function using the `opts` table.
+  automatically calls the `dante.setup()` function using the `opts` table.
 
   The table `opts` that you specify, will be merged with the default options
   which are:
 
 >lua
   {
-    [Option1] = "[default_value]",
-    [Option2] = "[default_value]",
-    [Option3] = [boolean_value],
+    -- notify with extra information
+    verbose = false,
+
+    presets = {
+      ["default"] = {
+        client = {
+          base_url = "https://api.openai.com/v1",
+          api_key = nil,
+        },
+        request = {
+          model = "gpt-4o-mini",
+          temperature = 0.0001,
+          stream = false, -- stream the response or return all at once
+          messages = {
+            {
+              role = "system",
+              content = [[
+  You are an assistant responsible for correcting errors in text.
+  Refine the spelling and grammar while closely adhering to the original version.
+
+  - If the text is formatted in a specific syntax (e.g. LaTeX, Markdown, Vimdoc, ...), abide by that syntax.
+  - Use the same language and terminology appropriate for the context.
+  - Return only the enhanced text without commentary.
+  - Maintain the integrity of the original text's line breaks and spacing (i.e. follow the original text's `\n`)
+
+  Do NOT return the generated text enclosed in triple ticks (```).
+  ]],
+            },
+            {
+              role = "user",
+              content = "{{SELECTED_LINES}}",
+            },
+          },
+        },
+      },
+    },
   }
 <
 
-  - `[Option1]`: [Description of Option1]
-  - `[Option2]`: [Description of Option2]
-  - `[Option3]`: [Description of Option3]
+  - `verbose`: If `true`, the plugin will notify on completion you with extra
+    information.
 
+  - `presets`: This is a list of presets. The preset `default` is the only
+    preset available at the moment. The idea is that you can craft various
+    preset for various situations (e.g. just fix typos, refine an email, add
+    emojies to readme, reformat a doc, etc.). Presets can differ in provider,
+    model, generation parameters, stream and messages.
+
+  - `client`: The client options are used to connect to the provider's API.
+    - `base_url`: The base URL to connect to the provider's API
+    - `api_key`: The API key to authenticate with the provider's API.
+
+  - `request`: This is a request object which follow the same schema of OpenAI
+    request object (https://platform.openai.com/docs/api-reference/chat).
+    OpenAI implements plenty of options but not all compatible API support all
+    of them but the most common are.
 
 ================================================================================
-COMMANDS                                                     *[plugin_name]-commands*
+PLACEHOLDERS                                              *dante-placeholders*
 
-User commands, that is commands that start with `:` followed by a capital
-letter, are the main way to interact with plugins. The available commands
-provided by this plugin are:
+Placeholders are used to inject context in request messages. They have the
+form `{{PLACEHOLDER_NAME}}`. At the moment, only one placeholder is supported:
 
-:[PrimaryCommand] [optional_parameter] ~
-  [Description of what happens when PrimaryCommand is run]
+- `{{SELECTED_LINES}}`: The selected lines in the buffer. This selection is
+  obtained from the range given while using `Dante` command. See
+  |dante-commands|.
 
-:[StopCommand]  ~
-  [Description of what happens when StopCommand is run]
+================================================================================
+COMMANDS                                                      *dante-commands*
 
+There is only one command provided by the plugin:
+
+:{range}Dante [preset] ~
+  The `Dante` command requires a range to work. It will substitute the
+  placeholder `{{SELECTED_LINES}}` with the selected lines in the buffer and
+  query the LLM provider with the specified preset. If no preset is given, it
+  will use the default preset.
+
+  The range can be specified in the following ways:
+  - `:'<,'>Dante` Run command in visual mode to use the selected lines.
+  - `:%Dante` to use the entire buffer.
+  - `:1,10Dante` to use lines 1 to 10.
+  - `:'a,'bDante` Manually specify the range using marks.
 
 ==============================================================================
- vim:tw=78:ts=8:et:ft=help:norl:
-
+vim:tw=78:ts=8:et:ft=help:norl:
