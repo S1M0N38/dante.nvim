@@ -1,4 +1,8 @@
 vim.api.nvim_create_user_command("Dante", function(args)
+  if args.range ~= 2 then
+    vim.notify("Please select a range of text.", vim.log.levels.WARN)
+    return
+  end
   if args.args == "" then
     args.args = "default"
   end
