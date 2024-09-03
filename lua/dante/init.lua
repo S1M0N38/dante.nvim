@@ -10,20 +10,19 @@ end
 
 ---Replace the placeholder in the content string
 ---@param content string: The content string to be formatted
+---@param start_line integer: The start line of the selected text
+---@param end_line integer: The end line of the selected text
 ---@return string: The formatted content string
-function dante.format(content)
-  if content:find("{{'<,'>}}") then
-    local start_idx, end_idx = content:find("{{'<,'>}}")
-    local start_pos = vim.fn.getpos("'<")
-    local end_pos = vim.fn.getpos("'>")
-    local range_lines = vim.api.nvim_buf_get_lines(0, start_pos[2] - 1, end_pos[2], false)
+function dante.format(content, start_line, end_line)
+  -- SELECTED_LINES: replace with the selected text specified by the command
+  if content:find("{{SELECTED_LINES}}") then
+    local start_idx, end_idx = content:find("{{SELECTED_LINES}}")
+    local range_lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
     local range_text = table.concat(range_lines, "\n")
     content = content:sub(1, start_idx - 1) .. range_text .. content:sub(end_idx + 1)
-    return dante.format(content)
+    return dante.format(content, start_line, end_line)
 
-  -- TODO: add other placeholders
-  -- elseif content:find("{{'<,'>}}")[1] then
-  --    return dante.format(content)
+  -- ANOTHER_PLACEHOLDER: add other placeholders...
   else
     return content
   end
@@ -68,7 +67,7 @@ function dante.main(preset_key, start_line, end_line)
 
   -- Format the messages content (e.g. substitute selected text)
   for _, message in ipairs(preset.request.messages) do
-    message.content = dante.format(message.content)
+    message.content = dante.format(message.content, start_line, end_line)
   end
 
   -- Request UI

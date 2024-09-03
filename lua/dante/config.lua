@@ -33,7 +33,7 @@ Do NOT return the generated text enclosed in triple ticks (```).
           },
           {
             role = "user",
-            content = "{{'<,'>}}",
+            content = "{{SELECTED_LINES}}",
           },
         },
       },
