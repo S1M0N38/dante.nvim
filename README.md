@@ -4,8 +4,6 @@ An unpolished grammar checker powered by OpenAI models and [Neovim's builtin dif
 
 https://github.com/S1M0N38/dante.nvim/assets/22257750/33ed003f-5160-428f-b3a2-dc4bb697f76b
 
-
-
 ## 💡 Idea
 
 I wanted to experiment with the newly released [GPT Assistant API](https://platform.openai.com/docs/assistants/overview). Vim/Neovim's builtin diff tool is a good way to highlight the differences between the original text and the suggested one.
@@ -106,8 +104,6 @@ For obtaining the best results, you should:
 Be cautious of the text you are feeding into Dante. There is no mechanism to mitigate prompt injection, and the resulting text can be unexpected.
 
 ![example-prompt-injection](https://github.com/S1M0N38/dante.nvim/assets/22257750/c707db0f-4f67-4286-b774-fee11963c3dc)
-
-
 
 ## 🙏 Acknowledgments
 
