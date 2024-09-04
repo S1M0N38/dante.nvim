@@ -1,0 +1,12 @@
+================================================================================
+PLACEHOLDERS                                              *dante-placeholders*
+
+Placeholders are used to inject context in request messages. They have the
+from `{{PLACEHOLDER_NAME}}`. The following placeholders are supported:
+
+- `{{SELECTED_LINES}}`: The selected lines in the buffer. This selection is
+  obtaned from the range given while using `Dante` command. See
+  |dante-commands|.
+
+- `{{NOW}}`: It will be replace by te current date and time. For example:
+  "Today is Wed, 04 Sep 2024 08:22:32 +0200"
