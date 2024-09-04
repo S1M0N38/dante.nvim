@@ -2,47 +2,27 @@
 local dante = require("dante")
 
 local opts = {
-  verbose = true,
   presets = {
     ["default"] = {
       client = {
         base_url = "https://api.groq.com/openai/v1",
-        -- base_url = "http://localhost:11434/v1", -- Test with local LLM (Ollama)
+        -- base_url = "http://localhost:11434/v1", -- Ollama (Local)
         api_key = vim.fn.getenv("GROQ_API_KEY_DANTE_NVIM"),
       },
       request = {
         temperature = 0.0001,
         -- NOTE: Groq is soo fast that I need to used the slower model (70b) to test the stream option.
         -- Otherwise, the new completion chunk is returned before the previous one is processed.
-        model = "llama-3.1-70b-versatile", -- Groq
-        -- model = "llama-3.1-8b-instant", -- Groq
-        -- model = "llama3.1:8b-instruct-q6_K", -- Test with local LLM (Ollama)
+        model = "llama-3.1-70b-versatile", -- Groq (External)
+        -- model = "llama-3.1-8b-instant", -- Groq (External)
+        -- model = "llama3.1:8b-instruct-q6_K", -- Ollama (Local)
         stream = false,
       },
     },
   },
 }
 
----Get all the lines from the who-is-dante-fix.md file.
----Open a new buffer, read the lines and delete the buffer.
----@return string[] lines
-local function get_correct_lines()
-  vim.cmd("edit ./spec/examples/who-is-dante-fix.md")
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-  return lines
-end
-
----Open the who-is-dante.md file and set the marks
----@return integer start_line
----@return integer end_line
-local function select_incorrect_lines()
-  vim.cmd("edit ./spec/examples/who-is-dante.md")
-  vim.api.nvim_buf_set_mark(0, "<", 7, 0, {})
-  vim.api.nvim_buf_set_mark(0, ">", 19, 0, {})
-  return 7, 19
-end
-
----Get the buffer by name
+---Get response buffer by matching the buffer name: "[Dante]"
 local function get_res_buf()
   local bufs = vim.api.nvim_list_bufs()
   for _, buf in ipairs(bufs) do
@@ -55,56 +35,77 @@ local function get_res_buf()
 end
 
 describe("dante.main with default preset", function()
-  -- TODO: test for wrong configuration
+  local correct_lines, start_line, end_line, res_buf
 
-  it("fix incorrect lines (stream=false)", function()
+  setup(function()
     dante.setup(opts)
+    vim.cmd("edit ./spec/examples/who-is-dante-fix.md")
+    correct_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    vim.cmd("edit ./spec/examples/who-is-dante.md")
+    start_line, end_line = 7, 19 -- line to be fixed
+  end)
 
-    -- Setup
-    local correct_lines = get_correct_lines()
-    local start_line, end_line = select_incorrect_lines()
-
-    -- Run dante.main
-    local job_id = dante.main("default", start_line, end_line)
-    vim.fn.jobwait({ job_id }, 10000)
-
-    -- Compare the generated lines with the correct lines
-    local res_buf = get_res_buf()
-    local generated_lines = vim.api.nvim_buf_get_lines(res_buf, 0, -1, true)
-    for i, generated_line in ipairs(generated_lines) do
-      assert.are.same(correct_lines[i], generated_line, "line " .. i .. " is not equal to correct line")
-    end
-
-    -- Cleanup
+  teardown(function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       vim.api.nvim_buf_delete(buf, { force = true })
     end
   end)
 
-  it("fix incorrect lines (stream=true)", function()
+  it("fix incorrect lines in md file (stream=false)", function()
+    -- Run dante.main
+    local job_id = dante.main("default", start_line, end_line)
+    vim.fn.jobwait({ job_id }, 10000)
+
+    -- Compare the generated lines with the correct lines
+    res_buf = get_res_buf()
+    local generated_lines = vim.api.nvim_buf_get_lines(res_buf, 0, -1, true)
+    for i, generated_line in ipairs(generated_lines) do
+      assert.are.same(correct_lines[i], generated_line, "line " .. i .. " is not equal to correct line")
+    end
+  end)
+
+  it("fix incorrect lines in md file (stream=true)", function()
     opts.presets["default"].request.stream = true
     dante.setup(opts)
-
-    -- Setup
-    local correct_lines = get_correct_lines()
-    local start_line, end_line = select_incorrect_lines()
 
     -- Run dante.main
     local job_id = dante.main("default", start_line, end_line)
     vim.fn.jobwait({ job_id }, 10000)
 
     -- Compare the generated lines with the correct lines
-    local res_buf = get_res_buf()
+    res_buf = get_res_buf()
+    local generated_lines = vim.api.nvim_buf_get_lines(res_buf, 0, -1, true)
+    for i, generated_line in ipairs(generated_lines) do
+      assert.are.same(correct_lines[i], generated_line, "line " .. i .. " is not equal to correct line")
+    end
+  end)
+end)
+
+describe("dante.main with placeholders in the selected lines", function()
+  local correct_lines, start_line, end_line, res_buf
+
+  it("fix incorrect lines in txt file", function()
+    -- Setup
+    dante.setup(opts)
+    vim.cmd("edit ./spec/examples/placeholders-fix.txt")
+    correct_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    vim.cmd("edit ./spec/examples/placeholders.txt")
+    start_line, end_line = 1, 12 -- line to be fixed (all lines)
+
+    -- Run dante.main
+    local job_id = dante.main("default", start_line, end_line)
+    vim.fn.jobwait({ job_id }, 10000)
+
+    -- Compare the generated lines with the correct lines
+    res_buf = get_res_buf()
     local generated_lines = vim.api.nvim_buf_get_lines(res_buf, 0, -1, true)
     for i, generated_line in ipairs(generated_lines) do
       assert.are.same(correct_lines[i], generated_line, "line " .. i .. " is not equal to correct line")
     end
 
-    -- Cleanup
+    -- Teardown
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       vim.api.nvim_buf_delete(buf, { force = true })
     end
   end)
 end)
-
--- TODO: test other presets
