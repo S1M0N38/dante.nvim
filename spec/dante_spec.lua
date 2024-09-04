@@ -23,20 +23,20 @@ local opts = {
   },
 }
 
----Get all the lines from the correct.md file.
+---Get all the lines from the who-is-dante-fix.md file.
 ---Open a new buffer, read the lines and delete the buffer.
 ---@return string[] lines
 local function get_correct_lines()
-  vim.cmd("edit ./spec/examples/correct.md")
+  vim.cmd("edit ./spec/examples/who-is-dante-fix.md")
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
   return lines
 end
 
----Open the incorrect.md file and set the marks
+---Open the who-is-dante.md file and set the marks
 ---@return integer start_line
 ---@return integer end_line
 local function select_incorrect_lines()
-  vim.cmd("edit ./spec/examples/incorrect.md")
+  vim.cmd("edit ./spec/examples/who-is-dante.md")
   vim.api.nvim_buf_set_mark(0, "<", 7, 0, {})
   vim.api.nvim_buf_set_mark(0, ">", 19, 0, {})
   return 7, 19
@@ -55,6 +55,8 @@ local function get_res_buf()
 end
 
 describe("dante.main with default preset", function()
+  -- TODO: test for wrong configuration
+
   it("fix incorrect lines (stream=false)", function()
     dante.setup(opts)
 
@@ -104,3 +106,5 @@ describe("dante.main with default preset", function()
     end
   end)
 end)
+
+-- TODO: test other presets
