@@ -6,8 +6,8 @@ dante.nvim is a simple writing plugin powered by LLM with diff view.
 Table of contents:
 
 1. SETUP: Install and setup the plugin.                          |dante-setup|
-2. PLACEHODERS: Inject context in request messages.       |dante-placeholders|
-3. COMMANDS: Commands provided by the plugin.              |commands-commands|
+2. PLACEHOLDERS: Inject context in request messages.      |dante-placeholders|
+3. COMMANDS: Commands provided by the plugin.                 |dante-commands|
 
 ================================================================================
 SETUP                                                            *dante-setup*
@@ -40,14 +40,14 @@ example, using `lazy.nvim`:
 <
 
 Usually, in the installation example, the plugin author provides the bare
-minimum setup. However, dante.nvim has very few options so it makes sense to
-discuss them here. Here is the breakdown of the previous example:
+minimum setup. However, dante.nvim has very few options, so it makes sense to
+discuss them here. Here is a breakdown of the previous example:
 
 - `S1M0N38/dante.nvim`: Where to download the plugin hosted on GitHub.
 - `cmd`: Load this plugin only when the `:Dante` command is called.
 - `opts`: A table with plugin options. See |dante.setup()|.
 
-So with this configuration, when the command `:Dante` is called:
+So, with this configuration, when the command `:Dante` is called:
 
 1. The `dante.nvim` plugin is loaded
 2. |dante.setup()| is called with the `opts` table
@@ -57,16 +57,16 @@ So with this configuration, when the command `:Dante` is called:
                                                                *dante.setup()*
 dante.setup({opts}) ~
 
-  The `dante.setup()` function is a convention used by many plugins to set
-  up options provided by the user. It's so common that `lazy.nvim`
-  automatically calls the `dante.setup()` function using the `opts` table.
+  The `dante.setup()` function is a convention used by many plugins to set up
+  options provided by the user. It's so common that `lazy.nvim` automatically
+  calls the `dante.setup()` function using the `opts` table.
 
-  The table `opts` that you specify, will be merged with the default options
+  The table `opts` that you specify will be merged with the default options,
   which are:
 
 >lua
   {
-    -- notify with extra information
+    -- Notify with extra information
     verbose = false,
 
     presets = {
@@ -86,10 +86,10 @@ dante.setup({opts}) ~
   You are an assistant responsible for correcting errors in text.
   Refine the spelling and grammar while closely adhering to the original version.
 
-  - If the text is formatted in a specific syntax (e.g. LaTeX, Markdown, Vimdoc, ...), abide by that syntax.
+  - If the text is formatted in a specific syntax (e.g., LaTeX, Markdown, Vimdoc, ...), abide by that syntax.
   - Use the same language and terminology appropriate for the context.
   - Return only the enhanced text without commentary.
-  - Maintain the integrity of the original text's line breaks and spacing (i.e. follow the original text's `\n`)
+  - Maintain the integrity of the original text's line breaks and spacing (i.e., follow the original text's `\n`)
 
   Do NOT return the generated text enclosed in triple ticks (```).
   ]],
@@ -105,23 +105,24 @@ dante.setup({opts}) ~
   }
 <
 
-  - `verbose`: If `true`, the plugin will notify on completion you with extra
-    information.
+  - `verbose`: If `true`, the plugin will notify you with extra information on
+    completion.
 
   - `presets`: This is a list of presets. The preset `default` is the only
     preset available at the moment. The idea is that you can craft various
-    preset for various situations (e.g. just fix typos, refine an email, add
-    emojies to readme, reformat a doc, etc.). Presets can differ in provider,
+    presets for various situations (e.g., just fix typos, refine an email, add
+    emojis to a readme, reformat a doc, etc.). Presets can differ in provider,
     model, generation parameters, stream and messages.
 
   - `client`: The client options are used to connect to the provider's API.
     - `base_url`: The base URL to connect to the provider's API
     - `api_key`: The API key to authenticate with the provider's API.
 
-  - `request`: This is a request object which follow the same schema of OpenAI
-    request object (https://platform.openai.com/docs/api-reference/chat).
-    OpenAI implements plenty of options but not all compatible API support all
-    of them but the most common are.
+  - `request`: This is a request object which follows the same schema as the
+    OpenAI request object
+    (https://platform.openai.com/docs/api-reference/chat). OpenAI implements
+    plenty of options, but not all compatible APIs support all of them, only
+    the most common.
 
 ================================================================================
 PLACEHOLDERS                                              *dante-placeholders*
@@ -136,10 +137,10 @@ form `{{PLACEHOLDER_NAME}}`. The following placeholders are supported:
 - `{{NOW}}`: It will be replaced by the current date and time. For example:
   "Today is Wed, 04 Sep 2024 08:22:32 +0200"
 
-The placeholders are process as such only if they are define in the preset. If
-valid placeholders are present in the selected lines they are not processed
-and kept as they are. This choice help to keep the plugin simple and avoid
-infinite loops.
+The placeholders are processed as such only if they are defined in the preset.
+If valid placeholders are present in the selected lines, they are not
+processed and kept as they are. This choice helps keep the plugin simple and
+avoid infinite loops.
 
 ================================================================================
 COMMANDS                                                      *dante-commands*
@@ -153,7 +154,7 @@ There is only one command provided by the plugin:
   will use the default preset.
 
   The range can be specified in the following ways:
-  - `:'<,'>Dante` Run command in visual mode to use the selected lines.
+  - `:'<,'>Dante` Run the command in visual mode to use the selected lines.
   - `:%Dante` to use the entire buffer.
   - `:1,10Dante` to use lines 1 to 10.
   - `:'a,'bDante` Manually specify the range using marks.
