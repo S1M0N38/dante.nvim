@@ -12,9 +12,8 @@ end
 ---@param content string: The content string to be formatted
 ---@param start_line integer: The start line of the selected text
 ---@param end_line integer: The end line of the selected text
----@param buf integer: The buffer number of the selected text
 ---@return string: The formatted content string
-function dante.format(content, start_line, end_line, buf)
+function dante.format(content, start_line, end_line)
   local result = ""
   local last_end = 1
 
@@ -35,6 +34,7 @@ function dante.format(content, start_line, end_line, buf)
 
   -- Find and replace all placeholders
   for placeholder_start, placeholder_end in content:gmatch("(){{.-}}()") do
+    ---@diagnostic disable-next-line: param-type-mismatch
     local placeholder = content:sub(placeholder_start, placeholder_end - 1)
     result = result .. content:sub(last_end, placeholder_start - 1)
     result = result .. get_replacement(placeholder)
