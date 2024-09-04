@@ -8,24 +8,43 @@ function dante.setup(options)
   require("dante.config").setup(options)
 end
 
----Replace the placeholder in the content string
+---Replace all placeholders in the content string
 ---@param content string: The content string to be formatted
 ---@param start_line integer: The start line of the selected text
 ---@param end_line integer: The end line of the selected text
+---@param buf integer: The buffer number of the selected text
 ---@return string: The formatted content string
-function dante.format(content, start_line, end_line)
-  -- SELECTED_LINES: replace with the selected text specified by the command
-  if content:find("{{SELECTED_LINES}}") then
-    local start_idx, end_idx = content:find("{{SELECTED_LINES}}")
-    local range_lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
-    local range_text = table.concat(range_lines, "\n")
-    content = content:sub(1, start_idx - 1) .. range_text .. content:sub(end_idx + 1)
-    return dante.format(content, start_line, end_line)
+function dante.format(content, start_line, end_line, buf)
+  local result = ""
+  local last_end = 1
 
-  -- ANOTHER_PLACEHOLDER: add other placeholders...
-  else
-    return content
+  -- Function to get the replacement for a placeholder
+  local function get_replacement(placeholder)
+    if placeholder == "{{SELECTED_LINES}}" then
+      local range_lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+      return table.concat(range_lines, "\n")
+    elseif placeholder == "{{NOW}}" then
+      return os.date("Today is %a, %d %b %Y %H:%M:%S %z")
+    -- Add other placeholders here...
+    else
+      -- If not recognized, keep the original placeholder
+      vim.notify("Unrecognized placeholder: " .. placeholder, vim.log.levels.WARN)
+      return placeholder
+    end
   end
+
+  -- Find and replace all placeholders
+  for placeholder_start, placeholder_end in content:gmatch("(){{.-}}()") do
+    local placeholder = content:sub(placeholder_start, placeholder_end - 1)
+    result = result .. content:sub(last_end, placeholder_start - 1)
+    result = result .. get_replacement(placeholder)
+    last_end = placeholder_end
+  end
+
+  -- Append any remaining content after the last placeholder
+  result = result .. content:sub(last_end)
+
+  return result
 end
 
 ---Get the last line, column and line count in the chat buffer
