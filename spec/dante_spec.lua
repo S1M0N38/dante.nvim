@@ -87,7 +87,6 @@ describe("dante.main with default preset", function()
 
   it("fix incorrect lines in md file (stream=false)", function()
     -- Run dante.main
-    vim.wait(100)
     local job_id = dante.main("default", start_line, end_line)
     vim.fn.jobwait({ job_id }, 10000)
 
@@ -105,7 +104,6 @@ describe("dante.main with default preset", function()
     dante.setup(opts_stream)
 
     -- Run dante.main
-    vim.wait(100)
     local job_id = dante.main("default", start_line, end_line)
     vim.fn.jobwait({ job_id }, 10000)
 
@@ -130,7 +128,6 @@ describe("dante.main with placeholders in the selected lines (vimdoc preset)", f
     start_line, end_line = 1, 12 -- line to be fixed (all lines)
 
     -- Run dante.main
-    vim.wait(100)
     local job_id = dante.main("vimdoc", start_line, end_line)
     vim.fn.jobwait({ job_id }, 10000)
 
