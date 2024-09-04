@@ -20,6 +20,7 @@ config.defaults = {
           {
             role = "system",
             content = [[
+{{NOW}}
 You are an assistant responsible for correcting errors in text.
 Refine the spelling and grammar while closely adhering to the original version.
 
