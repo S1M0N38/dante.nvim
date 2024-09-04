@@ -18,13 +18,12 @@
 ______________________________________________________________________
 
 > [!IMPORTANT]
-> This is heavy refactoring of the original dante.nvim plugin. If you want to
-> use the previous version, stick to `a6955468391665d6465b371e81d1a80eac4cf0f1`
-> commit.
+> This is a heavily refactored version of the original dante.nvim plugin. If you want
+> use the previous version, stick to the `a6955468391665d6465b371e81d1a80eac4cf0f1` commit.
 
 ## ⚡️ Requirements
 
-- Test on Neovim ≥ **0.10**
+- Tested on Neovim ≥ **0.10**
 - [cURL](https://curl.se/)
 - Access to [OpenAI compatible API](https://github.com/S1M0N38/ai.nvim?tab=readme-ov-file#-llm-providers)
 
@@ -57,15 +56,15 @@ Read the documentation with [`:help dante`](https://github.com/S1M0N38/dante.nvi
 
 > [!NOTE]
 > Vim/Neovim plugins are usually shipped with :help documentation. Learning how
-> to navigate it is a really valuable skill. If you are not familiar with it,
+> to navigate it is a valuable skill. If you are not familiar with it,
 > start with `:help` and read the first 20 lines.
 
 > [!TIP]
 > This plugin ships with a bare minimum configuration. The idea is that the
 > user can define their own presets to interact with different LLM providers
 > and customize the requests down to the last LLM parameter. The downside is
-> that the opts table could become quite large and verbose, however in Neovim
-> configuration == code so you can dry it up with utility functions.
+> that the opts table could become quite large and verbose, but in Neovim,
+> configuration == code, so you can simplify it with utility functions.
 
 ## 🙏 Acknowledgments
 
@@ -76,4 +75,4 @@ This plugin was inspired by:
 - [Bryley/neoai.nvim](https://github.com/Bryley/neoai.nvim)
 - [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
 
-This very README is a copycat of [lazy.nvim](https://github.com/folke/lazy.nvim) README.
+This README is a copycat of [lazy.nvim](https://github.com/folke/lazy.nvim)'s README.
