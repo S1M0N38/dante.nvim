@@ -127,11 +127,19 @@ dante.setup({opts}) ~
 PLACEHOLDERS                                              *dante-placeholders*
 
 Placeholders are used to inject context in request messages. They have the
-form `{{PLACEHOLDER_NAME}}`. At the moment, only one placeholder is supported:
+form `{{PLACEHOLDER_NAME}}`. The following placeholders are supported:
 
 - `{{SELECTED_LINES}}`: The selected lines in the buffer. This selection is
-  obtained from the range given while using `Dante` command. See
+  obtained from the range given while using the `Dante` command. See
   |dante-commands|.
+
+- `{{NOW}}`: It will be replaced by the current date and time. For example:
+  "Today is Wed, 04 Sep 2024 08:22:32 +0200"
+
+The placeholders are process as such only if they are define in the preset. If
+valid placeholders are present in the selected lines they are not processed
+and kept as they are. This choice help to keep the plugin simple and avoid
+infinite loops.
 
 ================================================================================
 COMMANDS                                                      *dante-commands*
