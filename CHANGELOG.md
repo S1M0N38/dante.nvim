@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/S1M0N38/dante.nvim/compare/v1.0.0...v1.0.1) (2024-09-04)
+
+
+### Bug Fixes
+
+* **config:** improve formatting and consistency in assistant instructions ([4b7e8fe](https://github.com/S1M0N38/dante.nvim/commit/4b7e8fe3e2366904352534dc705d5f743c6b7375))
+
 ## 1.0.0 (2024-09-04)
 
 
