@@ -10,13 +10,47 @@ local opts = {
         api_key = vim.fn.getenv("GROQ_API_KEY_DANTE_NVIM"),
       },
       request = {
-        temperature = 0.0001,
+        temperature = 0.00001,
         -- NOTE: Groq is soo fast that I need to used the slower model (70b) to test the stream option.
         -- Otherwise, the new completion chunk is returned before the previous one is processed.
         model = "llama-3.1-70b-versatile", -- Groq (External)
         -- model = "llama-3.1-8b-instant", -- Groq (External)
         -- model = "llama3.1:8b-instruct-q6_K", -- Ollama (Local)
         stream = false,
+      },
+    },
+    ["vimdoc"] = {
+      client = {
+        base_url = "https://api.groq.com/openai/v1",
+        api_key = vim.fn.getenv("GROQ_API_KEY_DANTE_NVIM"),
+      },
+      request = {
+        model = "llama-3.1-70b-versatile",
+        temperature = 0.00001,
+        stream = false,
+        messages = {
+          {
+            role = "system",
+            content = [[
+The user is writing the documentation for a vim plugin.
+The text is written in vim help file syntax.
+
+You are an assistant responsible for correcting errors in text.
+
+- Refine the spelling and grammar while closely adhering to the original version.
+- Keep the line length to 78 characters or less.
+- Use the same format and style as the original text.
+- Maintain the integrity of the original text's line breaks and spacing.
+
+Return ONLY the enhanced text without commentary.
+Do NOT return the generated text enclosed in triple ticks (```).
+]],
+          },
+          {
+            role = "user",
+            content = "{{SELECTED_LINES}}",
+          },
+        },
       },
     },
   },
@@ -81,7 +115,7 @@ describe("dante.main with default preset", function()
   end)
 end)
 
-describe("dante.main with placeholders in the selected lines", function()
+describe("dante.main with placeholders in the selected lines (vimdoc preset)", function()
   local correct_lines, start_line, end_line, res_buf
 
   it("fix incorrect lines in txt file", function()
@@ -93,7 +127,7 @@ describe("dante.main with placeholders in the selected lines", function()
     start_line, end_line = 1, 12 -- line to be fixed (all lines)
 
     -- Run dante.main
-    local job_id = dante.main("default", start_line, end_line)
+    local job_id = dante.main("vimdoc", start_line, end_line)
     vim.fn.jobwait({ job_id }, 10000)
 
     -- Compare the generated lines with the correct lines
