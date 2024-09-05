@@ -11,6 +11,7 @@ local opts = {
       },
       request = {
         temperature = 0,
+        seed = 0,
         -- NOTE: Groq is soo fast that I need to used the slower model (70b) to test the stream option.
         -- Otherwise, the new completion chunk is returned before the previous one is processed.
         model = "llama-3.1-70b-versatile", -- Groq (External)
@@ -27,6 +28,7 @@ local opts = {
       request = {
         model = "llama-3.1-70b-versatile",
         temperature = 0,
+        seed = 0,
         stream = false,
         messages = {
           {
