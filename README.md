@@ -50,6 +50,8 @@ ______________________________________________________________________
 }
 ```
 
+For a more complex configuration, check [my own config](https://github.com/S1M0N38/dotfiles/blob/macos/config/lazyvim/lua/plugins/dante.lua)
+
 ## 🚀 Usage
 
 Read the documentation with [`:help dante`](https://github.com/S1M0N38/dante.nvim/blob/main/doc/dante.txt)
