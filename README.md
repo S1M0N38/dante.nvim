@@ -18,8 +18,7 @@
 ______________________________________________________________________
 
 > [!IMPORTANT]
-> This is a heavily refactored version of the original dante.nvim plugin. If you want
-> use the previous version, stick to the `a6955468391665d6465b371e81d1a80eac4cf0f1` commit.
+> **Note on Version Compatibility**: This is a heavily refactored version of the original dante.nvim plugin. If you want to use the previous version, stick to the `a6955468391665d6465b371e81d1a80eac4cf0f1` commit.
 
 ## ⚡️ Requirements
 
@@ -29,11 +28,15 @@ ______________________________________________________________________
 
 ## 📦 Installation
 
+You can install dante.nvim using your preferred plugin manager. Here's an example configuration for lazy.nvim:
+
 ```lua
 -- using lazy.nvim
 {
   "S1M0N38/dante.nvim",
+  lazy = true,
   cmd = "Dante",
+  version = "*",
   opts = {
     presets = {
       ["default"] = {
@@ -54,27 +57,19 @@ For a more complex configuration, check [my own config](https://github.com/S1M0N
 
 ## 🚀 Usage
 
-Read the documentation with [`:help dante`](https://github.com/S1M0N38/dante.nvim/blob/main/doc/dante.txt)
+To get started with dante.nvim, read the documentation with [`:help dante`](https://github.com/S1M0N38/dante.nvim/blob/main/doc/dante.txt). This will provide you with a comprehensive overview of the plugin's features and usage.
 
 > [!NOTE]
-> Vim/Neovim plugins are usually shipped with :help documentation. Learning how
-> to navigate it is a valuable skill. If you are not familiar with it,
-> start with `:help` and read the first 20 lines.
+> **Learning Vim/Neovim Documentation**: Vim/Neovim plugins are usually shipped with :help documentation. Learning how to navigate it is a valuable skill. If you are not familiar with it, start with `:help` and read the first 20 lines.
 
 > [!TIP]
-> This plugin ships with a bare minimum configuration. The idea is that the
-> user can define their own presets to interact with different LLM providers
-> and customize the requests down to the last LLM parameter. The downside is
-> that the opts table could become quite large and verbose, but in Neovim,
-> configuration == code, so you can simplify it with utility functions.
+> **Customizing Configuration**: This plugin ships with a bare minimum configuration. The idea is that the user can define their own presets to interact with different LLM providers and customize the requests down to the last LLM parameter. The downside is that the opts table could become quite large and verbose, but in Neovim, configuration == code, so you can simplify it with utility functions.
 
 ## 🙏 Acknowledgments
 
-This plugin was inspired by:
+This plugin was inspired by the following projects:
 
-- [jackMort/ChatGPT.nvim](https://github.com/jackMort/ChatGPT.nvim)
-- [David-Kunz/gen.nvim](https://github.com/David-Kunz/gen.nvim)
-- [Bryley/neoai.nvim](https://github.com/Bryley/neoai.nvim)
-- [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
-
-This README is a copycat of [lazy.nvim](https://github.com/folke/lazy.nvim)'s README.
+* [jackMort/ChatGPT.nvim](https://github.com/jackMort/ChatGPT.nvim)
+* [David-Kunz/gen.nvim](https://github.com/David-Kunz/gen.nvim)
+* [Bryley/neoai.nvim](https://github.com/Bryley/neoai.nvim)
+* [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
