@@ -29,10 +29,12 @@ ______________________________________________________________________
 ## 📦 Installation
 
 You can install dante.nvim using your preferred plugin manager. Here's an example configuration for lazy.nvim:
+
 ```lua
 -- using lazy.nvim
 {
   "S1M0N38/dante.nvim",
+  lazy = true,
   cmd = "Dante",
   version = "*",
   opts = {
