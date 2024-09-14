@@ -50,6 +50,7 @@ end
 ---@param opts Options
 ---@param after_lines string[]
 ---@return function
+---@diagnostic disable-next-line: unused-local
 M.on_exit = function(res, req, opts, after_lines)
   return function()
     vim.api.nvim_buf_set_lines(res.buf, -1, -1, true, after_lines)

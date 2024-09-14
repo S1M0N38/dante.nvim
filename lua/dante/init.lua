@@ -12,6 +12,7 @@ end
 
 --- Setup the UI for Dante
 ---@param opts Options: The options for Dante
+---@diagnostic disable-next-line: unused-local
 local function setup_ui(opts)
   -- Diff options
   local diff = {
