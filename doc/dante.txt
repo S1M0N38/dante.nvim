@@ -33,7 +33,7 @@ example, using `lazy.nvim`:
       dependencies = {
         {
           "S1M0N38/ai.nvim",
-          version="~1.0.0",
+          version=">=1.1.0",
         },
       }
     }

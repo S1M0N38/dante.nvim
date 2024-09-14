@@ -10,7 +10,8 @@ local opts = {
         api_key = vim.fn.getenv("GROQ_API_KEY_DANTE_NVIM"),
       },
       request = {
-        temperature = 0.00001,
+        temperature = 0,
+        seed = 0,
         -- NOTE: Groq is soo fast that I need to used the slower model (70b) to test the stream option.
         -- Otherwise, the new completion chunk is returned before the previous one is processed.
         model = "llama-3.1-70b-versatile", -- Groq (External)
@@ -26,7 +27,8 @@ local opts = {
       },
       request = {
         model = "llama-3.1-70b-versatile",
-        temperature = 0.00001,
+        temperature = 0,
+        seed = 0,
         stream = false,
         messages = {
           {
@@ -99,8 +101,9 @@ describe("dante.main with default preset", function()
   end)
 
   it("fix incorrect lines in md file (stream=true)", function()
-    opts.presets["default"].request.stream = true
-    dante.setup(opts)
+    local opts_stream = vim.deepcopy(opts)
+    opts_stream.presets["default"].request.stream = true
+    dante.setup(opts_stream)
 
     -- Run dante.main
     local job_id = dante.main("default", start_line, end_line)
