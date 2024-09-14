@@ -6,9 +6,9 @@
     "lua/?/init.lua"
   ],
   "Lua.workspace.library": [
-    "/home/runner/work/dante.nvim/dante.nvim/lua_modules/share/lua/5.1",
-    "/home/runner/work/dante.nvim/dante.nvim/deps/neovim/runtime/lua",
-    "/home/runner/work/dante.nvim/dante.nvim/deps/neodev.nvim/types/stable"
+    "/github/workspace/deps/neodev.nvim/types/stable",
+    "${3rd}/luassert/library",
+    "${3rd}/busted/library"
   ],
   "Lua.diagnostics.libraryFiles": "Disable",
   "Lua.workspace.checkThirdParty": "Disable"
