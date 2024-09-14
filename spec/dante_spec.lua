@@ -1,4 +1,3 @@
----@diagnostic disable: undefined-global
 local dante = require("dante")
 
 local opts = {
