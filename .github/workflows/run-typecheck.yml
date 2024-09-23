@@ -27,6 +27,12 @@ jobs:
           repository: "folke/neodev.nvim"
           path: "deps/neodev.nvim"
 
+      - name: Checkout dependency neodev
+        uses: actions/checkout@v3
+        with:
+          repository: "S1M0N38/ai.nvim"
+          path: "deps/ai.nvim"
+
       - name: Type Check Code Base
         uses: mrcjkb/lua-typecheck-action@v0
         with:
