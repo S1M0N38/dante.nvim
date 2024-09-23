@@ -1,4 +1,4 @@
-<h1 align="center">✎&nbsp;&nbsp;dante.nvim&nbsp;&nbsp;✧</h1>
+<h1 align="center">✎&nbsp;&nbsp;dante.nvim&nbsp;&nbsp;<a href="https://github.com/S1M0N38/ai.nvim">✧</a></h1>
 
 <p align="center">
   <a href="https://github.com/S1M0N38/dante.nvim/actions/workflows/run-tests.yml">
