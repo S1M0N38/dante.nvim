@@ -1,8 +1,8 @@
 <h1 align="center">✎&nbsp;&nbsp;dante.nvim&nbsp;&nbsp;✧</h1>
 
 <p align="center">
-  <a href="https://github.com/S1M0N38/dante.nvim/actions/workflows/tests.yml">
-    <img alt="Tests workflow" src="https://img.shields.io/github/actions/workflow/status/S1M0N38/dante.nvim/tests.yml?style=for-the-badge&label=Tests"/>
+  <a href="https://github.com/S1M0N38/dante.nvim/actions/workflows/run-tests.yml">
+    <img alt="Tests workflow" src="https://img.shields.io/github/actions/workflow/status/S1M0N38/dante.nvim/run-tests.yml?style=for-the-badge&label=Tests"/>
   </a>
   <a href="https://luarocks.org/modules/S1M0N38/dante.nvim">
     <img alt="LuaRocks release" src="https://img.shields.io/luarocks/v/S1M0N38/dante.nvim?style=for-the-badge&color=5d2fbf"/>
@@ -69,7 +69,7 @@ To get started with dante.nvim, read the documentation with [`:help dante`](http
 
 This plugin was inspired by the following projects:
 
-* [jackMort/ChatGPT.nvim](https://github.com/jackMort/ChatGPT.nvim)
-* [David-Kunz/gen.nvim](https://github.com/David-Kunz/gen.nvim)
-* [Bryley/neoai.nvim](https://github.com/Bryley/neoai.nvim)
-* [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
+- [jackMort/ChatGPT.nvim](https://github.com/jackMort/ChatGPT.nvim)
+- [David-Kunz/gen.nvim](https://github.com/David-Kunz/gen.nvim)
+- [Bryley/neoai.nvim](https://github.com/Bryley/neoai.nvim)
+- [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim)
