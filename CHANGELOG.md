@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/S1M0N38/dante.nvim/compare/v1.0.1...v1.1.0) (2024-09-23)
+
+
+### Features
+
+* add callback and utility functions for chat completion ([fde4cc2](https://github.com/S1M0N38/dante.nvim/commit/fde4cc2605558ea6d538a08c8d0304af9d7b2f8d))
+* **ci:** update ci to base.nvim template ([0a69989](https://github.com/S1M0N38/dante.nvim/commit/0a699892eaba75409f972f86344f06b954722801))
+* **ci:** update ci to base.nvim template [#17](https://github.com/S1M0N38/dante.nvim/issues/17) ([c6f92aa](https://github.com/S1M0N38/dante.nvim/commit/c6f92aad4919e87e27ce3d76f7b750fc6bf0781e))
+
+
+### Bug Fixes
+
+* **workflows:** update Lua workspace and add environment variable for tests ([4e8a974](https://github.com/S1M0N38/dante.nvim/commit/4e8a9748d62001ace537bf6faed23601e6b6f310))
+
 ## [1.0.1](https://github.com/S1M0N38/dante.nvim/compare/v1.0.0...v1.0.1) (2024-09-04)
 
 
