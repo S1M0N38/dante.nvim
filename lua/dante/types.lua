@@ -14,7 +14,7 @@
 
 --- lua/dante/config.lua -------------------------------------------------------
 
----@alias Layout "right" | "left" | "above" | "below" | "overlay"
+---@alias Layout "right" | "left" | "above" | "below"
 
 ---@class Preset
 ---@field client AiOptions: client options for ai.nvim

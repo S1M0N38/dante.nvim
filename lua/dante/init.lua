@@ -51,15 +51,10 @@ local function setup_ui(opts)
     vim.api.nvim_set_option_value(opt, value, { buf = res.buf })
   end
 
-  if opts.layout == "overlay" then
-    res.win = nil
-  else
-    res.win = vim.api.nvim_open_win(res.buf, true, { split = opts.layout, win = req.win })
-    for opt, value in pairs(win_opts) do
-      vim.api.nvim_set_option_value(opt, value, { win = res.win })
-    end
+  res.win = vim.api.nvim_open_win(res.buf, true, { split = opts.layout, win = req.win })
+  for opt, value in pairs(win_opts) do
+    vim.api.nvim_set_option_value(opt, value, { win = res.win })
   end
-
   return req, res
 end
 
@@ -93,21 +88,12 @@ function dante.main(preset_key, start_line, end_line)
   -- Add line before the response
   vim.api.nvim_buf_set_lines(res.buf, 0, 0, true, before_lines)
 
-  -- NOTE: maybe remove this
-  -- vim.api.nvim_win_set_cursor(res_win, { start_line, 0 })
-
   local on_chat_completion = callbacks.on_chat_completion(res, opts)
   local on_chat_completion_chunk = callbacks.on_chat_completion_chunk(res, opts)
 
   local on_stdout = nil -- use ai.nvim on_stdout
   local on_stderr = nil -- use ai.nvim on_stderr
-
-  local on_exit
-  if opts.layout == "overlay" then
-    on_exit = callbacks.on_exit_overlay(req, res, opts, after_lines)
-  else
-    on_exit = callbacks.on_exit(req, res, opts, after_lines)
-  end
+  local on_exit = callbacks.on_exit(req, res, opts, after_lines)
 
   return client:chat_completion_create(
     preset.request,
