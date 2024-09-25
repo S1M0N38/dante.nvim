@@ -12,6 +12,7 @@ end
 
 --- Setup the UI for Dante
 ---@param opts DanteOptions: The options for Dante
+---@return RequestTable, ResponseTable: Request and Response tables
 local function setup_ui(opts)
   -- Diff options
   local diff = {
@@ -23,7 +24,7 @@ local function setup_ui(opts)
   }
   vim.cmd("set diffopt=" .. table.concat(diff, ","))
 
-  -- Request
+  ---@type RequestTable
   local req = {
     name = vim.api.nvim_buf_get_name(0),
     buf = vim.api.nvim_get_current_buf(),
@@ -40,7 +41,7 @@ local function setup_ui(opts)
     bri = vim.wo.breakindent,
   }
 
-  -- Response
+  ---@type ResponseTable
   local res = {
     buf = vim.api.nvim_create_buf(false, true),
     name = utils.generate_buf_name(),
@@ -50,10 +51,13 @@ local function setup_ui(opts)
     vim.api.nvim_set_option_value(opt, value, { buf = res.buf })
   end
 
-  -- TODO: do not open the window if overlay | vertical | horizontal
-  res.win = vim.api.nvim_open_win(res.buf, true, { split = "right", win = req.win })
-  for opt, value in pairs(win_opts) do
-    vim.api.nvim_set_option_value(opt, value, { win = res.win })
+  if opts.layout == "overlay" then
+    res.win = nil
+  else
+    res.win = vim.api.nvim_open_win(res.buf, true, { split = opts.layout, win = req.win })
+    for opt, value in pairs(win_opts) do
+      vim.api.nvim_set_option_value(opt, value, { win = res.win })
+    end
   end
 
   return req, res
@@ -97,7 +101,13 @@ function dante.main(preset_key, start_line, end_line)
 
   local on_stdout = nil -- use ai.nvim on_stdout
   local on_stderr = nil -- use ai.nvim on_stderr
-  local on_exit = callbacks.on_exit(res, req, opts, after_lines)
+
+  local on_exit
+  if opts.layout == "overlay" then
+    on_exit = callbacks.on_exit_overlay(req, res, opts, after_lines)
+  else
+    on_exit = callbacks.on_exit(req, res, opts, after_lines)
+  end
 
   return client:chat_completion_create(
     preset.request,

@@ -45,19 +45,21 @@ M.on_chat_completion_chunk = function(res, opts)
 end
 
 ---Callback function to handle the exit of a chat request.
----@param res table
----@param req table
+---@param req RequestTable
+---@param res ResponseTable
 ---@param opts DanteOptions
 ---@param after_lines string[]
 ---@return function
 ---@diagnostic disable-next-line: unused-local
-M.on_exit = function(res, req, opts, after_lines)
+M.on_exit = function(req, res, opts, after_lines)
   return function()
     vim.api.nvim_buf_set_lines(res.buf, -1, -1, true, after_lines)
     vim.api.nvim_set_current_win(res.win)
     vim.cmd("diffthis")
     vim.api.nvim_set_current_win(req.win)
     vim.cmd("diffthis")
+    vim.api.nvim_set_option_value("foldlevel", 999, { win = res.win })
+    vim.api.nvim_set_option_value("foldlevel", 999, { win = req.win })
   end
 end
 
