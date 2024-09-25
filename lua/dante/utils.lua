@@ -55,7 +55,7 @@ M.format = function(content, start_line, end_line)
       return table.concat(range_lines, "\n")
     elseif placeholder == "{{NOW}}" then
       return tostring(os.date("Today is %a, %d %b %Y %H:%M:%S %z"))
-    -- Add other placeholders here...
+      -- Add other placeholders here...
     else
       -- If not recognized, keep the original placeholder
       vim.notify("Unrecognized placeholder: " .. placeholder, vim.log.levels.WARN)
