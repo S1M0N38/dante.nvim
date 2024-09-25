@@ -2,7 +2,7 @@ local M = {}
 
 ---Callback function to handle the completion of a chat request.
 ---@param res table
----@param opts Options
+---@param opts DanteOptions
 ---@return function
 M.on_chat_completion = function(res, opts)
   return function(obj)
@@ -23,7 +23,7 @@ end
 
 ---Callback function to handle the completion chunk of a chat request.
 ---@param res table
----@param opts Options
+---@param opts DanteOptions
 ---@return function
 M.on_chat_completion_chunk = function(res, opts)
   return function(obj)
@@ -47,7 +47,7 @@ end
 ---Callback function to handle the exit of a chat request.
 ---@param res table
 ---@param req table
----@param opts Options
+---@param opts DanteOptions
 ---@param after_lines string[]
 ---@return function
 ---@diagnostic disable-next-line: unused-local

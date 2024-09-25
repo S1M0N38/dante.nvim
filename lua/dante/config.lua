@@ -1,9 +1,13 @@
 local config = {}
 
+---@class DanteOptions
 config.defaults = {
 
   -- notify with extra information
   verbose = false,
+
+  -- layout of the response buffer
+  layout = "right",
 
   -- list of presets
   presets = {
@@ -41,22 +45,12 @@ config.defaults = {
   },
 }
 
----@class ClientOptions
----@field base_url string: base url of the api
----@field api_key string: api key
-
----@class Preset
----@field client ClientOptions: client options
----@field request RequestObject: request object
-
----@class Options
----@field verbose boolean: report the usage of the model with vim.notify
----@field presets Preset[]: list of presets
+---@class DanteOptions
 config.options = {}
 
 ---Setup the ai.nvim client options.
 ---It must be called before using other ai.nvim functions.
----@param opts Options: config table
+---@param opts DanteOptions: config table
 config.setup = function(opts)
   config.options = vim.tbl_deep_extend("force", {}, config.defaults, opts or {})
 end

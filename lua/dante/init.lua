@@ -5,14 +5,13 @@ local callbacks = require("dante.callbacks")
 local dante = {}
 
 --- Setup global options for Dante
----@param options Options: global options for Dante
+---@param options DanteOptions: global options for Dante
 function dante.setup(options)
   require("dante.config").setup(options)
 end
 
 --- Setup the UI for Dante
----@param opts Options: The options for Dante
----@diagnostic disable-next-line: unused-local
+---@param opts DanteOptions: The options for Dante
 local function setup_ui(opts)
   -- Diff options
   local diff = {
