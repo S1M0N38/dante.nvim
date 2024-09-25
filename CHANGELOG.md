@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0](https://github.com/S1M0N38/dante.nvim/compare/v1.1.0...v1.2.0) (2024-09-25)
+
+
+### Features
+
+* add health check module for validating presets and options ([ac3160f](https://github.com/S1M0N38/dante.nvim/commit/ac3160f1e3f773459a0d4dff0ba760ac303af7a4))
+* add support for overlay layout and improve folding behavior ([06681d0](https://github.com/S1M0N38/dante.nvim/commit/06681d0401d3051204361a475f0e3eea452d85fc))
+* **types:** add RequestTable and ResponseTable classes ([ea75a28](https://github.com/S1M0N38/dante.nvim/commit/ea75a2846bd7ddd4181129a974cdc93fceff7fc1))
+* update lua type annotations ([9ff3379](https://github.com/S1M0N38/dante.nvim/commit/9ff337974f74ddd19a7c1dd01ee9da75b1bb871b))
+
 ## [1.1.0](https://github.com/S1M0N38/dante.nvim/compare/v1.0.1...v1.1.0) (2024-09-23)
 
 
