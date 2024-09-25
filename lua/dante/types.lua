@@ -2,6 +2,16 @@
 
 --- lua/dante/init.lua ---------------------------------------------------------
 
+---@class RequestTable
+---@field name string: buffer name
+---@field buf integer: buffer number
+---@field win integer: window number
+
+---@class ResponseTable
+---@field name string: buffer name
+---@field buf integer: buffer number
+---@field win? integer: window number
+
 --- lua/dante/config.lua -------------------------------------------------------
 
 ---@alias Layout "right" | "left" | "above" | "below" | "overlay"
