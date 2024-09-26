@@ -45,6 +45,9 @@ discuss them here. Here is a breakdown of the previous example:
 - `cmd`: Load this plugin only when the `:Dante` command is called.
 - `opts`: A table with plugin options. See |dante.setup()|.
 
+You can check that the plugin is installed correctly and options provided are
+valid by running `:checkhealth dante`.
+
 When the `:Dante` command is called:
 
 1. The `dante.nvim` plugin is loaded
