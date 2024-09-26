@@ -12,8 +12,8 @@ Table of contents:
 ================================================================================
 SETUP                                                            *dante-setup*
 
-It's highly recommended to use a plugin manager to install dante.nvim. For
-example, using `lazy.nvim`:
+It's recommended to use a plugin manager to install dante.nvim. For example,
+using `lazy.nvim`:
 
 >lua
     {
@@ -32,7 +32,7 @@ example, using `lazy.nvim`:
         }
       }
       dependencies = {
-        { "S1M0N38/ai.nvim", version=">=1.1.0" },
+        { "S1M0N38/ai.nvim", version = ">=1.3.0" },
       }
     }
 <
@@ -67,9 +67,8 @@ dante.setup({opts}) ~
 
 >lua
   {
-    -- Enable verbose notifications
     verbose = false,
-
+    layout = "right",
     presets = {
       ["default"] = {
         client = {
@@ -108,6 +107,9 @@ dante.setup({opts}) ~
 
   - `verbose`: If `true`, the plugin will notify you with extra information on
     completion.
+
+  - `layout`: In which direction open the new window for the generated text.
+    Can be "right", "left", "above" or "below".
 
   - `presets`: A list of presets. The preset `default` is the only preset
     available at the moment. You can craft various presets for various
