@@ -17,27 +17,22 @@
 
 ______________________________________________________________________
 
+*Write, generate improved text, navigate through differences and accept/reject them individually.*
 
 ![dante nvim-screencast](https://github.com/user-attachments/assets/9031cc3f-5b2b-4fa9-b2cd-3485e95da70d)
-
-
-
-
-> [!IMPORTANT]
-> **Note on Version Compatibility**: This is a heavily refactored version of the original dante.nvim plugin. If you want to use the previous version, stick to the `a6955468391665d6465b371e81d1a80eac4cf0f1` commit.
 
 ## ⚡️ Requirements
 
 - Tested on Neovim ≥ **0.10**
 - [cURL](https://curl.se/)
-- Access to [OpenAI compatible API](https://github.com/S1M0N38/ai.nvim?tab=readme-ov-file#-llm-providers)
+- Access to an [OpenAI compatible API](https://github.com/S1M0N38/ai.nvim?tab=readme-ov-file#-llm-providers)
 
 ## 📦 Installation
 
 You can install dante.nvim using your preferred plugin manager. Here's an example configuration for lazy.nvim:
 
 ```lua
--- using lazy.nvim
+-- Using lazy.nvim
 {
   "S1M0N38/dante.nvim",
   lazy = true,
@@ -54,12 +49,13 @@ You can install dante.nvim using your preferred plugin manager. Here's an exampl
     },
   },
   dependencies = {
-    { "S1M0N38/ai.nvim", version=">=1.1.0" },
+    { "S1M0N38/ai.nvim", version = ">=1.1.0" },
   }
 }
 ```
 
-For a more complex configuration, check [my own config](https://github.com/S1M0N38/dotfiles/blob/macos/config/lazyvim/lua/plugins/dante.lua)
+For a more complex configuration with the same keymaps shown in the screencast, check [my own config](https://github.com/S1M0N38/dotfiles/blob/macos/config/lazyvim/lua/plugins/dante.lua).
+
 
 ## 🚀 Usage
 
