@@ -17,6 +17,12 @@
 
 ______________________________________________________________________
 
+
+![dante nvim-screencast](https://github.com/user-attachments/assets/9031cc3f-5b2b-4fa9-b2cd-3485e95da70d)
+
+
+
+
 > [!IMPORTANT]
 > **Note on Version Compatibility**: This is a heavily refactored version of the original dante.nvim plugin. If you want to use the previous version, stick to the `a6955468391665d6465b371e81d1a80eac4cf0f1` commit.
 
