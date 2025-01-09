@@ -11,7 +11,6 @@ dante was born in **Florence**, Italy, to a family of moderate means. he receive
 ### The Divine Comedy
 
 The **Divine Comedy** is a epic poem divided into tree cantiche:
-
 - **Inferno** (Hell
 - **Purgatorio** (Purgatory)
 - **Paradiso** (Paradise)

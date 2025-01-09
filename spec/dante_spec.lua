@@ -5,17 +5,12 @@ local opts = {
     ["default"] = {
       client = {
         base_url = "https://api.groq.com/openai/v1",
-        -- base_url = "http://localhost:11434/v1", -- Ollama (Local)
         api_key = vim.fn.getenv("GROQ_API_KEY_DANTE_NVIM"),
       },
       request = {
-        temperature = 0,
+        model = "llama-3.3-70b-versatile",
+        temperature = 0.0001,
         seed = 0,
-        -- NOTE: Groq is soo fast that I need to used the slower model (70b) to test the stream option.
-        -- Otherwise, the new completion chunk is returned before the previous one is processed.
-        model = "llama-3.1-70b-versatile", -- Groq (External)
-        -- model = "llama-3.1-8b-instant", -- Groq (External)
-        -- model = "llama3.1:8b-instruct-q6_K", -- Ollama (Local)
         stream = false,
       },
     },
@@ -25,7 +20,7 @@ local opts = {
         api_key = vim.fn.getenv("GROQ_API_KEY_DANTE_NVIM"),
       },
       request = {
-        model = "llama-3.1-70b-versatile",
+        model = "llama-3.3-70b-versatile",
         temperature = 0,
         seed = 0,
         stream = false,
@@ -77,7 +72,7 @@ describe("dante.main with default preset", function()
     vim.cmd("edit ./spec/examples/who-is-dante-fix.md")
     correct_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     vim.cmd("edit ./spec/examples/who-is-dante.md")
-    start_line, end_line = 7, 19 -- line to be fixed
+    start_line, end_line = 7, 18 -- line to be fixed
   end)
 
   teardown(function()

@@ -5,7 +5,7 @@ Placeholders are used to inject context in request messages. They have the
 form `{{PLACEHOLDER_NAME}}`. The following placeholders are supported:
 
 - `{{SELECTED_LINES}}`: The selected lines in the buffer. This selection is
-  obtained from the range given while using the `Dante` command. See
+  obtained from the range given while using `Dante` command. See
   |dante-commands|.
 
 - `{{NOW}}`: It will be replaced by the current date and time. For example:
