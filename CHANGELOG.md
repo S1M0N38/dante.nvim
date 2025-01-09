@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/S1M0N38/dante.nvim/compare/v1.2.0...v1.3.0) (2025-01-09)
+
+
+### Features
+
+* update ai.nvim dependency and improve doc ([5021c1d](https://github.com/S1M0N38/dante.nvim/commit/5021c1d0b878eef29c4505cd59cfb4e9b8a7d09d))
+
 ## [1.2.0](https://github.com/S1M0N38/dante.nvim/compare/v1.1.0...v1.2.0) (2024-09-25)
 
 
