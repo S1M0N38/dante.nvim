@@ -120,6 +120,8 @@ dante.setup({opts}) ~
   - `client`: Client options for connecting to the provider's API.
     - `base_url`: The base URL to connect to the provider's API
     - `api_key`: The API key to authenticate with the provider's API.
+    Checkout https://github.com/S1M0N38/ai.nvim README for a list of supported
+    providers.
 
   - `request`: A request object following the OpenAI request object schema
     (https://platform.openai.com/docs/api-reference/chat). OpenAI implements
