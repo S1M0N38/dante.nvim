@@ -49,7 +49,7 @@ You can install dante.nvim using your preferred plugin manager. Here's an exampl
     },
   },
   dependencies = {
-    { "S1M0N38/ai.nvim", version = ">=1.3.0" },
+    { "S1M0N38/ai.nvim", version = ">=1.4.0" },
   }
 }
 ```
