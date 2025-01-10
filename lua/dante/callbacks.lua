@@ -29,7 +29,7 @@ M.on_chat_completion_chunk = function(res, opts)
   return function(obj)
     local finish_reason = obj.choices[1].finish_reason
     local content = obj.choices[1].delta.content
-    if finish_reason == vim.NIL then
+    if finish_reason == nil then
       local lines = vim.split(content, "\n", { plain = true, trimempty = false })
       local last_line, last_column = require("dante.utils").last(res.buf)
       vim.api.nvim_buf_set_text(res.buf, last_line, last_column, last_line, last_column, lines)
