@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/S1M0N38/dante.nvim/compare/v1.3.0...v1.3.1) (2025-01-10)
+
+
+### Bug Fixes
+
+* update nil checking in callbacks ([7dcbbe9](https://github.com/S1M0N38/dante.nvim/commit/7dcbbe9c3405bea2eddab581d42b9c969b865747))
+
 ## [1.3.0](https://github.com/S1M0N38/dante.nvim/compare/v1.2.0...v1.3.0) (2025-01-09)
 
 
