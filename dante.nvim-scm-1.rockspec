@@ -5,24 +5,24 @@ package = "dante.nvim"
 version = _MODREV .. _SPECREV
 
 description = {
-  summary = "A Neovim grammar checker powered by LLM.",
-  labels = { "neovim" },
-  homepage = "https://github.com/S1M0N38/ai.nvim",
-  license = "MIT",
+	summary = "A Neovim grammar checker powered by LLM.",
+	labels = { "neovim" },
+	homepage = "https://github.com/S1M0N38/ai.nvim",
+	license = "MIT",
 }
 
 dependencies = {
-  "ai.nvim",
+	"ai.nvim >= 1.4.1-1",
 }
 
 test_dependencies = {
-  "nlua",
+	"nlua",
 }
 
 source = {
-  url = "git://github.com/S1M0N38/" .. package,
+	url = "git://github.com/S1M0N38/" .. package,
 }
 
 build = {
-  type = "builtin",
+	type = "builtin",
 }
