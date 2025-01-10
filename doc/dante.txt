@@ -32,7 +32,7 @@ using `lazy.nvim`:
         }
       }
       dependencies = {
-        { "S1M0N38/ai.nvim", version = ">=1.4.0" },
+        { "S1M0N38/ai.nvim", version = ">=1.4.1" },
       }
     }
 <
