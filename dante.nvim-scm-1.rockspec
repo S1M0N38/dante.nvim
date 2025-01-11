@@ -12,7 +12,7 @@ description = {
 }
 
 dependencies = {
-	"ai.nvim >= 1.4.1-1",
+	"ai.nvim >= 1.4.2-1",
 }
 
 test_dependencies = {
