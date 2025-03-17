@@ -14,7 +14,7 @@
       <img alt="Reddit post" src="https://img.shields.io/badge/post-reddit?style=for-the-badge&label=Reddit&color=FF5700"/>
       </a>
    </p>
-   <div><img src="https://github.com/user-attachments/assets/9031cc3f-5b2b-4fa9-b2cd-3485e95da70d" alt="Screencast: dante.nvim example usage"></div>
+   <div><video src="https://github.com/user-attachments/assets/1c9b2d29-944f-4a08-8135-cda8e61a0aa7" alt="Screencast: dante.nvim example usage"></div>
    <p><em>Write, generate improved text, navigate through differences and accept/reject them individually.</em></p>
    <hr>
 </div>
