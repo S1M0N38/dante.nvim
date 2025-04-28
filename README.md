@@ -52,8 +52,7 @@ You can install dante.nvim using your preferred plugin manager. Here's an exampl
 }
 ```
 
-For a more complex configuration with the same keymaps shown in the screencast, check [my own config](https://github.com/S1M0N38/dotfiles/blob/macos/config/lazyvim/lua/plugins/dante.lua).
-
+For a more complex configuration using the same keymaps as shown in the screencast, check [my old configuration](https://github.com/S1M0N38/dotfiles-old/blob/0400f1d5ba021f711a50b91763d35ab4bb7404cd/config/lazyvim/lua/plugins/dante.lua).
 
 ## 🚀 Usage
 
